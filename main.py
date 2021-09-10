@@ -3,9 +3,11 @@ Nicholas Warner
 ID: 001447619
 """
 
-from package import Package
-from wgups_packages import packages
+from packages import Package,packages
 from truck import Truck
 
 for p in packages:
-	print(str(p.id))
+    id = p.id
+    mass = p.mass
+    note = p.note
+    print(f"ID: {id}\tMASS: {mass}\tNOTE: {note}")

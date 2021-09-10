@@ -2,8 +2,23 @@
 File which contains each package to be delievered for the C950 final assessment
 """
 
-from package import Package
-
+#define Package class
+class Package:
+	def __init__(self, id):
+		self.id = id
+		self.dest = ''
+		self.city = ''
+		self.state = ''
+		self.zip = ''
+		self.available = 100
+		self.deadline = 2359
+		self.mass = 1
+		self.note = ''
+		self.truck = -1
+		self.group = {}
+        self.delivered = False
+        self.time_delivered = ""
+        
 #instantiate the packages
 p1 = Package(1)
 p1.dest = '195 W Oakland Ave'
@@ -48,7 +63,7 @@ p6.dest = '3060 Lester St'
 p6.city = 'West Valley City'
 p6.state = 'UT'
 p6.zip = 84119
-p6.available = 0905
+p6.available = 905
 p6.deadline = 1030
 p6.mass = 88
 p6.note = 'Delayed on flight---will not arrive to depot until 09:05'
@@ -118,7 +133,7 @@ p15.dest = '4580 S 2300 E'
 p15.city = 'Holladay'
 p15.state = 'UT'
 p15.zip = 84117
-p15.deadline = 0900
+p15.deadline = 900
 p15.mass = 4
 
 p16 = Package(16)
@@ -197,7 +212,7 @@ p25.dest = '5383 South 900 East #104'
 p25.city = 'Salt Lake City'
 p25.state = 'UT'
 p25.zip = 84117
-p25.available = 0905
+p25.available = 905
 p25.deadline = 1030
 p25.mass = 7
 p25.note = 'Delayed on flight---will not arrive to depot until 9:05'
@@ -221,7 +236,7 @@ p28.dest = '2835 Main St'
 p28.city = 'Salt Lake City'
 p28.state = 'UT'
 p28.zip = 84115
-p28.available = 0905
+p28.available = 905
 p28.mass = 7
 p28.note = 'Delayed on flight---will not arrive to depot until 9:05'
 
@@ -254,7 +269,7 @@ p32.dest = '3365 S 900 W'
 p32.city = 'Salt Lake City'
 p32.state = 'UT'
 p32.zip = 84119
-p32.available = 0905
+p32.available = 905
 p32.mass = 1
 p32.note = 'Delayed on flight---will not arrive to depot until 9:05'
 
