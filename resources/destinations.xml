@@ -1,0 +1,217 @@
+<root>
+	<destination id="0">
+		<name>Western Governors University</name>
+		<address zip="84107">
+			<street>4001 South 700 East</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="1">
+		<name>International Peace Gardens</name>
+		<address zip="84104">
+			<street>1060 Dalton Ave S</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="2">
+		<name>Sugar House Park</name>
+		<address zip="84106">
+			<street>1330 2100 S</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="3">
+		<name>Taylorsville-Bennion Heritage City Government Office</name>
+		<address zip="84123">
+			<street>1488 4800 S</street>
+			<city>Taylorsville</city>
+		</address>
+	</destination>
+	
+	<destination id="4">
+		<name>Salt Lake City Division of Health Services</name>
+		<address zip="84115">
+			<street>177 W Price Ave</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="5">
+		<name>South Salt Lake Public Works</name>
+		<address zip="84115">
+			<street>195 W Oakland Ave</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="6">
+		<name>Salt Lake City Streets and Sanitation</name>
+		<address zip="84104">
+			<street>2010 W 500 S</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="7">
+		<name>Deker Lake</name>
+		<address zip="84119">
+			<street>2300 Parkway Blvd</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="8">
+		<name>Salt Lake City Ottinger Hall</name>
+		<address zip="84103">
+			<street>233 Canyon Rd</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="9">
+		<name>Columbus Library</name>
+		<address zip="84106">
+			<street>2530 S 500 E</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="10">
+		<name>Taylorsville City Hall</name>
+		<address zip="84118">
+			<street>2600 Taylorsville Blvd</street>
+			<city>Taylorsville</city>
+		</address>
+	</destination>
+	
+	<destination id="11">
+		<name>South Salt Lake Police</name>
+		<address zip="84115">
+			<street>2835 Main St</street>
+			<city>Salt Lake city</city>
+		</address>
+	</destination>
+	
+	<destination id="12">
+		<name>Council Hall</name>
+		<address zip="84103">
+			<street>300 State St</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="13">
+		<name>Redwood Park</name>
+		<address zip="84119">
+			<street>3060 Lester St</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="14">
+		<name>Salt Lake County Mental Health</name>
+		<address zip="84119">
+			<street>3148 S 1100 W</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="15">
+		<name>Salt Lake County/United Police Dept</name>
+		<address zip="84119">
+			<street>3365 S 900 W</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="16">
+		<name>West Valley Prosecutor</name>
+		<address zip="84119">
+			<street>3575 W Valley Central Sta Bus Loop</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="17">
+		<name>Housing Auth. of Salt Lake County</name>
+		<address zip="84115">
+			<street>3595 Main St</street>
+			<city>Salt lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="18">
+		<name>Utah DMV Administrative Office</name>
+		<address zip="84115">
+			<street>380 W 2880 S</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="19">
+		<name>Third District Juvenile Court</name>
+		<address zip="84111">
+			<street>450 S State St</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="20">
+		<name>Cottonwood Regional Softball Complex</name>
+		<address zip="84117">
+			<street>4300 S 1300 E</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="21">
+		<name>Holladay City Office</name>
+		<address zip="84117">
+			<street>4580 S 2300 E</street>
+			<city>Holladay City</city>
+		</address>
+	</destination>
+	
+	<destination id="22">
+		<name>Murray City Museum</name>
+		<address zip="84107">
+			<street>5025 State Street</street>
+			<city>Murray</city>
+		</address>
+	</destination>
+	
+	<destination id="23">
+		<name>Valley Regional Softball Complex</name>
+		<address zip="84118">
+			<street>5100 South 2700 West</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="24">
+		<name>City Center of Rock Springs</name>
+		<address zip="84117">
+			<street>5383 S 900 E #104</street>
+			<city>West Valley City</city>
+		</address>
+	</destination>
+	
+	<destination id="25">
+		<name>Rice Terrace Paviliion Park</name>
+		<address zip="84105">
+			<street>600 E 900 South</street>
+			<city>Salt Lake City</city>
+		</address>
+	</destination>
+	
+	<destination id="26">
+		<name>Wheeler Historic Farm</name>
+		<address zip="84121">
+			<street>6351 South 900 East</street>
+			<city>Murray</city>
+		</address>
+	</destination>
+</root>
