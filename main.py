@@ -5,6 +5,10 @@ ID: 001447619
 
 from packages import Package,packages
 from truck import Truck
+from verticies import routeGraph
+
+t1 = Truck(1)
+t2 = Truck(2)
 
 for p in packages:
     id = p.id
