@@ -4,18 +4,18 @@ File which contains each package to be delievered for the C950 final assessment
 
 #define Package class
 class Package:
-	def __init__(self, id):
-		self.id = id
-		self.dest = ''
-		self.city = ''
-		self.state = ''
-		self.zip = ''
-		self.available = 100
-		self.deadline = 2359
-		self.mass = 1
-		self.note = ''
-		self.truck = -1
-		self.group = {}
+    def __init__(self, id):
+        self.id = id
+        self.dest = ''
+        self.city = ''
+        self.state = ''
+        self.zip = ''
+        self.available = 100
+        self.deadline = 2359
+        self.mass = 1
+        self.note = ''
+        self.truck = -1
+        self.group = {}
         self.delivered = False
         self.time_delivered = ""
         

@@ -4,14 +4,15 @@ ID: 001447619
 """
 
 from packages import Package,packages
-from truck import Truck
+#from truck import Truck
 from verticies import routeGraph
 
-t1 = Truck(1)
-t2 = Truck(2)
+#t1 = Truck(1)
+#t2 = Truck(2)
 
-for p in packages:
-    id = p.id
-    mass = p.mass
-    note = p.note
-    print(f"ID: {id}\tMASS: {mass}\tNOTE: {note}")
+#Test all possible delivery address were read correctly from xml
+print(str(len(routeGraph)))
+for v in routeGraph:
+    print(v.name)
+    print(str(v.address))
+    print("\n")

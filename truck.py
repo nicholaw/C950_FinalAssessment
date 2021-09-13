@@ -30,5 +30,3 @@ class Queue:
 
     def offer(self, item):
         self.items.append(item)
-
-    def pop(self):

@@ -4,25 +4,49 @@ This file also contains a matrix which stores the distances between each vertex 
 complete the route graph.
 """
 
+import xml.etree.ElementTree as ET
+
 #Define the Vertex class
 class Vertex:
-    def __init__(self, id, name, zip):
+    def __init__(self, id):
         self.id = id
-        self.name = name
-        self.address = ""
-        self.zip = zip
-        self.adjacencies = {}
+        self.name = "N/A"
+        self.address = "N/A"
         self.isHub = False
 
-    def hash_vertex(vertex):
-        return 0
+#Define Address class for use in vertex
+class Address:
+    def __init__(self, zip):
+        self.street = ""
+        self.city = ""
+        self.state = "UT"
+        self.zip = zip
 
-#Instantiate provided downtown destinations
-v1 = Vertex(1, "Western Governors Uninversity", 84107)
-v1.address = "4001 South 700 East"
-v1.isHub = True
+    def __str__(self):
+        str = self.street + "\n" + self.city + ", " + self.state + " " + self.zip
+        return str
 
-#Define adjacencies
-
-#Add vertecies to set to be used as the graph
+#Instantiate an empty set to store vertecies
 routeGraph = {}
+
+#Read in all possible delivery destinations from xml file
+tree = ET.parse("resources/destinations.xml")
+root = tree.getroot()
+
+#Populate the set of verticies with information from xml file
+for item in root.findall(".channel/item"):
+    v = Vertex(item.attrib["id"])
+    
+    for child in item:
+        if(child.tag == "name"):
+            print(child.text)
+            v.name = child.text
+        elif(tag == "address"):
+            a = Address(child.attrib["zip"])
+            for grandchild in child:
+                if(grandchild.tag == "street"):
+                    a.street = grandchild.text
+                elif(grandchild.tag == "city"):
+                    a.city = grandchild.text
+            v.address = a
+    routeGraph.add(v)
