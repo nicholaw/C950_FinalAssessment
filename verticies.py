@@ -13,6 +13,14 @@ class Vertex:
         self.name = "N/A"
         self.address = "N/A"
         self.isHub = False
+        self.adjacencies = list()
+
+    def __str__(self):
+        str = "(" + self.id + ")" + self.name
+        return str
+
+    def set_distances(self, list):
+        self.adjacencies = list
 
 #Define Address class for use in vertex
 class Address:
@@ -27,7 +35,7 @@ class Address:
         return str
 
 #Instantiate an empty set to store vertecies
-routeGraph = set()
+routeGraph = dict()
 
 #Read in all possible delivery destinations from xml file
 tree = ET.parse("resources/destinations.xml")
@@ -36,6 +44,8 @@ root = tree.getroot()
 #Populate the set of verticies with information from xml file
 for item in root.findall(".//destination"):
     v = Vertex(item.attrib["id"])
+    if(v.id == 0):
+        v.isHub = True
     
     for child in item:
         if(child.tag == "name"):
@@ -48,4 +58,6 @@ for item in root.findall(".//destination"):
                 elif(grandchild.tag == "city"):
                     a.city = grandchild.text
             v.address = a
-    routeGraph.add(v)
+    routeGraph[v] = list()
+
+#Define distances based on provided
