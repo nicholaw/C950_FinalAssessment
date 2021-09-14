@@ -11,7 +11,11 @@ from verticies import routeGraph
 #t2 = Truck(2)
 
 #Test all possible delivery address were read correctly from xml
+"""
 for v in routeGraph:
     print(v.name)
     print(str(v.address))
+    if(v.id == 0):
+        print(v.adjacencies)
     print("\n")
+"""

@@ -5,6 +5,10 @@
 			<street>4001 South 700 East</street>
 			<city>Salt Lake City</city>
 		</address>
+		<distances>
+			[0.0,7.2,11.0,2.2,3.5,10.9,8.6,7.6,2.8,6.4,3.2,7.6,
+			5.2,4.4,3.7,7.6,2.0,3.6,6.5,1.9,3.4,2.4,6.4,2.4,5.0,3.6]
+		</distances>
 	</destination>
 	
 	<destination id="1">

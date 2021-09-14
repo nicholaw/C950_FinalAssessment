@@ -58,6 +58,26 @@ for item in root.findall(".//destination"):
                 elif(grandchild.tag == "city"):
                     a.city = grandchild.text
             v.address = a
+        elif(child.tag == "distances"):
+            text = "".join((child.text).split())
+            distances = list()
+            count = 0
+            num = ""
+            for char in text:
+                print("READING: " + char)
+                if(char == "," or char == "]"):
+                    print("CONVERTING: " + num)
+                    print("INSERTING: " + str(float(num)))
+                    distances.insert(count, float(num))
+                    num = ""
+                    count = count + 1
+                elif(char == "["):
+                    continue
+                else:
+                    num = num + char
+            v.adjacencies = distances
+            print("RESULT:")
+            print(distances)
     routeGraph[v] = list()
 
 #Define distances based on provided
