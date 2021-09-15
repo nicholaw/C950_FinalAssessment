@@ -40,7 +40,7 @@ class Address:
         return str
 
 #Instantiate an empty set to store vertecies
-routeGraph = set()
+routeGraph = dict()
 
 #Read in all possible delivery destinations from xml file
 tree = ET.parse("resources/destinations.xml")
@@ -78,6 +78,6 @@ for item in root.findall(".//destination"):
                 else:
                     num = num + char
             v.adjacencies = distances
-    routeGraph.add(v)
+    routeGraph[v.address] = v
 
 #Define distances based on provided
