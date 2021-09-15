@@ -8,19 +8,24 @@ import xml.etree.ElementTree as ET
 
 #Define the Vertex class
 class Vertex:
-    def __init__(self, id):
-        self.id = id
-        self.name = "N/A"
-        self.address = "N/A"
-        self.isHub = False
-        self.adjacencies = list()
+	def __init__(self, id):
+		self.id = id
+		self.name = "N/A"
+		self.address = "N/A"
+		self.isHub = False
+		self.adjacencies = list()
 
-    def __str__(self):
-        str = "(" + self.id + ")" + self.name
-        return str
+	def __str__(self):
+		str = "(" + self.id + ")" + self.name
+		return str
 
-    def set_distances(self, list):
-        self.adjacencies = list
+	def __hash__(self):
+		hash = 991
+		primeMultiplier = 13
+		string = "".join(str(self.address).split())
+		for char in string:
+			hash = hash * primeMultiplier + ord(char)
+		return hash % 128
 
 #Define Address class for use in vertex
 class Address:
@@ -35,7 +40,7 @@ class Address:
         return str
 
 #Instantiate an empty set to store vertecies
-routeGraph = dict()
+routeGraph = set()
 
 #Read in all possible delivery destinations from xml file
 tree = ET.parse("resources/destinations.xml")
@@ -64,10 +69,7 @@ for item in root.findall(".//destination"):
             count = 0
             num = ""
             for char in text:
-                print("READING: " + char)
                 if(char == "," or char == "]"):
-                    print("CONVERTING: " + num)
-                    print("INSERTING: " + str(float(num)))
                     distances.insert(count, float(num))
                     num = ""
                     count = count + 1
@@ -76,8 +78,6 @@ for item in root.findall(".//destination"):
                 else:
                     num = num + char
             v.adjacencies = distances
-            print("RESULT:")
-            print(distances)
-    routeGraph[v] = list()
+    routeGraph.add(v)
 
 #Define distances based on provided
