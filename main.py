@@ -3,12 +3,14 @@ Nicholas Warner
 ID: 001447619
 """
 
-from packages import Package,packages
-#from truck import Truck
-from verticies import routeGraph
+from packages import packages
+from verticies import map
+from truck import Truck
 
-#t1 = Truck(1)
-#t2 = Truck(2)
+#Instantiate delivery trucks
+truck1 = Truck(1)
+truck2 = Truck(2)
 
-#Test all possible delivery address were read correctly from xml
-print(routeGraph)
+for p in packages:
+	if(p.id == 1):
+		print(str(p))

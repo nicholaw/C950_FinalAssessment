@@ -20,27 +20,37 @@ class Vertex:
 		return str
 
 	def __hash__(self):
+		return self.address.__hash__()
+
+#Define Address class for use in vertex
+class Address:
+	def __init__(self, zip):
+		self.street = ""
+		self.city = ""
+		self.state = "UT"
+		self.zip = zip
+
+	def of(street, city, state, zip):
+		address = Address(zip)
+		address.street = street
+		address.city = city
+		address.state = state
+		return address
+
+	def __str__(self):
+		str = self.street + "\n" + self.city + ", " + self.state + " " + self.zip
+		return str
+
+	def __hash__(self):
 		hash = 991
 		primeMultiplier = 13
-		string = "".join(str(self.address).split())
+		string = "".join(str(self).split())
 		for char in string:
 			hash = hash * primeMultiplier + ord(char)
 		return hash % 128
 
-#Define Address class for use in vertex
-class Address:
-    def __init__(self, zip):
-        self.street = ""
-        self.city = ""
-        self.state = "UT"
-        self.zip = zip
-
-    def __str__(self):
-        str = self.street + "\n" + self.city + ", " + self.state + " " + self.zip
-        return str
-
 #Instantiate an empty set to store vertecies
-routeGraph = dict()
+map = dict()
 
 #Read in all possible delivery destinations from xml file
 tree = ET.parse("resources/destinations.xml")
@@ -78,6 +88,4 @@ for item in root.findall(".//destination"):
                 else:
                     num = num + char
             v.adjacencies = distances
-    routeGraph[v.address] = v
-
-#Define distances based on provided
+    map[v.address] = v

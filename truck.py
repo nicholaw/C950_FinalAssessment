@@ -8,25 +8,20 @@ AVG_SPEED = 18
 
 #Define the Truck class
 class Truck:
-    def __init__(self, id):
-        self.id = id
-        self.packages = ""
-        self.dist = 0
-        self.location = ""
-        self.packages = Queue()
+	def __init__(self, id):
+		self.id = id
+		self.packages = ""
+		self.total_dist = 0
+		self.location = ""
+		self.packages = list()
 
-    def load_package(self, package):
-        if len(self.packages < MAX_PACKAGES):
-            packages.append(package)
-            return True
-        else:
-            return False
+	def load(self, p):
+		if(len(self.packages) >= MAX_PACKAGES):
+			return False
+		else:
+			packages.append(p)
+			return True
 
-    def execute_route(self):
-
-class Queue:
-    def __init__(self):
-        self.items = []
-
-    def offer(self, item):
-        self.items.append(item)
+	def deliver_next(self):
+		p = packages.pop(0)
+		self.location = p.dest
