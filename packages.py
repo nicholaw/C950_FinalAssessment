@@ -4,14 +4,15 @@ for Package class.
 """
 
 from verticies import Address
+from timeofday import Time
 
 #define Package class
 class Package:
 	def __init__(self, id):
 		self.id = id
 		self.dest = ""
-		self.available = 800
-		self.deadline = 2359
+		self.available = Time.of("08:00")
+		self.deadline = Time.of("23:59")
 		self.mass = 1
 		self.note = ''
 		self.truck = -1
@@ -23,13 +24,13 @@ class Package:
 		string = "Package:/n"
 		string = string + str(self.id) + "\n"
 		string = string + "Destination: "
-		string = string + str(self.dest) + "\n"
+		string = string + str(self.dest)
 		return string
 
 #instantiate the packages
 p1 = Package(1)
 p1.dest = Address.of("195 W Oakland Ave", "Salt Lake City", "UT", "84115")
-p1.deadline = 1030
+p1.deadline = Time.of("10:30")
 p1.mass = 21
 
 p2 = Package(2)
