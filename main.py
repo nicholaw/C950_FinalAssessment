@@ -14,4 +14,4 @@ truck2 = Truck(2)
 for p in packages:
     if(p.id == 1):
         print(str(p))
-        print("Deliver By: " + str(p.deadline))
+        print("DEADLINE: " + str(p.deadline))

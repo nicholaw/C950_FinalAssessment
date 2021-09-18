@@ -53,8 +53,8 @@ p5.mass = 5
 
 p6 = Package(6)
 p6.dest = Address.of("3060 Lester S", "West Valley City", "UT", "84119")
-p6.available = 905
-p6.deadline = 1030
+p6.available = Time.of("09:05")
+p6.deadline = Time.of("10:30")
 p6.mass = 88
 p6.note = 'Delayed on flight---will not arrive to depot until 09:05'
 
@@ -85,24 +85,24 @@ p12.mass = 1
 
 p13 = Package(13)
 p13.dest = Address.of("2010 W 500 S", "Salt Lake City", "UT", "84104")
-p13.deadline = 1030
+p13.deadline = Time.of("10:30")
 p13.mass = 2
 
 p14 = Package(14)
 p14.dest = Address.of("4300 S 1300 E", "Millcreek", "UT", "84117")
-p14.deadline = 1030
+p14.deadline = Time.of("10:30")
 p14.mass = 88
 p14.note = 'Must be delivered with 15, 19'
 p14.group = {14, 15, 19}
 
 p15 = Package(15)
 p15.dest = Address.of("4580 S 2300 E", "Holladay", "UT", "84117")
-p15.deadline = 900
+p15.deadline = Time.of("09:00")
 p15.mass = 4
 
 p16 = Package(16)
 p16.dest = Address.of("4580 S 2300 E", "Holladay", "UT", "84117")
-p16.deadline = 1030
+p16.deadline = Time.of("10:30")
 p16.mass = 88
 p16.note = 'Must be delivered with 13, 19'
 p16.group = {13, 16, 19}
@@ -123,7 +123,7 @@ p19.mass = 37
 
 p20 = Package(20)
 p20.dest = Address.of("3595 Main St", "Salt Lake City", "UT", "84115")
-p20.deadline = 1030
+p20.deadline = Time.of("10:30")
 p20.mass = 37
 p20.note = 'Must be delivered with 13, 15'
 p20.group = {13, 15, 20}
@@ -146,8 +146,8 @@ p24.mass = 7
 
 p25 = Package(25)
 p25.dest = Address.of("5383 South 900 East #104", "Salt Lake City", "UT", "84117")
-p25.available = 905
-p25.deadline = 1030
+p25.available = Time.of("09:05")
+p25.deadline = Time.of("10:30")
 p25.mass = 7
 p25.note = 'Delayed on flight---will not arrive to depot until 9:05'
 
@@ -161,28 +161,28 @@ p27.mass = 5
 
 p28 = Package(28)
 p28.dest = Address.of("2835 Main St", "Salt Lake City", "UT", "84115")
-p28.available = 905
+p28.available = Time.of("09:05")
 p28.mass = 7
 p28.note = 'Delayed on flight---will not arrive to depot until 9:05'
 
 p29 = Package(29)
 p29.dest = Address.of("1330 2100 S", "Salt Lake City", "UT", "84106")
-p29.deadline = 1030
+p29.deadline = Time.of("10:30")
 p29.mass = 2
 
 p30 = Package(30)
 p30.dest = Address.of("300 State St", "Salt Lake City", "UT", "84103")
-p30.deadline = 1030
+p30.deadline = Time.of("10:30")
 p30.mass = 1
 
 p31 = Package(31)
 p31.dest = Address.of("3365 S 900 W", "Salt Lake City", "UT", "84119")
-p31.deadline = 1030
+p31.deadline = Time.of("10:30")
 p31.mass = 1
 
 p32 = Package(32)
 p32.dest = Address.of("3365 S 900 Wt", "Salt Lake City", "UT", "84119")
-p32.available = 905
+p32.available = Time.of("09:05")
 p32.mass = 1
 p32.note = 'Delayed on flight---will not arrive to depot until 9:05'
 
@@ -192,7 +192,7 @@ p33.mass = 1
 
 p34 = Package(34)
 p34.dest = Address.of("4580 S 2300 E", "Holladay", "UT", "84117")
-p34.deadline = 1030
+p34.deadline = Time.of("10:30")
 p34.mass = 2
 
 p35 = Package(35)
@@ -207,7 +207,7 @@ p36.truck = 2
 
 p37 = Package(37)
 p37.dest = Address.of("410 S State St", "Salt Lake City", "UT", "84111")
-p37.deadline = 1030
+p37.deadline = Time.of("10:30")
 p37.mass = 2
 
 p38 = Package(38)
@@ -222,7 +222,7 @@ p39.mass = 9
 
 p40 = Package(40)
 p40.dest = Address.of("380 W 2880 S", "Salt Lake City", "UT", "84115")
-p40.deadline = 1030
+p40.deadline = Time.of("10:30")
 p40.mass = 45
 
 #add packages to set for export
