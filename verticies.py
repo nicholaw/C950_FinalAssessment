@@ -16,8 +16,8 @@ class Vertex:
 		self.adjacencies = list()
 
 	def __str__(self):
-		str = "(" + self.id + ")" + self.name
-		return str
+		string = "(" + str(self.id) + ")" + self.name
+		return string
 
 	def __hash__(self):
 		return self.address.__hash__()
@@ -72,7 +72,7 @@ root = tree.getroot()
 
 #Populate the set of verticies with information from xml file
 for item in root.findall(".//destination"):
-    v = Vertex(item.attrib["id"])
+    v = Vertex(int(item.attrib["id"]))
     if(v.id == 0):
         v.isHub = True
         HUB_VERTEX = v

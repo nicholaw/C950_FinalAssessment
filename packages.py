@@ -6,11 +6,6 @@ for Package class.
 from verticies import Address
 from timeofday import Time
 
-#define constants
-AT_HUB = "At Hub"
-EN_ROUTE = "En Route"
-DELIVERED = "Delivered"
-
 #define Package class
 class Package:
 	def __init__(self, id):
@@ -22,7 +17,6 @@ class Package:
 		self.note = ''
 		self.truck = -1
 		self.group = set()
-		self.status = AT_HUB
 		self.timeDelivered = -1
 
 	def __str__(self):
@@ -57,7 +51,7 @@ p5.dest = Address.of("410 S State St", "Salt Lake City", "UT", "84111")
 p5.mass = 5
 
 p6 = Package(6)
-p6.dest = Address.of("3060 Lester S", "West Valley City", "UT", "84119")
+p6.dest = Address.of("3060 Lester St", "West Valley City", "UT", "84119")
 p6.available = Time.of("09:05")
 p6.deadline = Time.of("10:30")
 p6.mass = 88
@@ -85,7 +79,7 @@ p11.dest = Address.of("2600 Taylorsville Blvd", "Salt Lake City", "UT", "84118")
 p11.mass = 1
 
 p12 = Package(12)
-p12.dest = Address.of("3575 W Valley Central Station", "West Valley", "UT", "84119")
+p12.dest = Address.of("3575 W Valley Central Station", "West Valley City", "UT", "84119")
 p12.mass = 1
 
 p13 = Package(13)
@@ -176,7 +170,7 @@ p29.deadline = Time.of("10:30")
 p29.mass = 2
 
 p30 = Package(30)
-p30.dest = Address.of("300 State St", "Salt Lake City", "UT", "84103")
+p30.dest = Address.of("300 State Street", "Salt Lake City", "UT", "84103")
 p30.deadline = Time.of("10:30")
 p30.mass = 1
 
@@ -186,7 +180,7 @@ p31.deadline = Time.of("10:30")
 p31.mass = 1
 
 p32 = Package(32)
-p32.dest = Address.of("3365 S 900 Wt", "Salt Lake City", "UT", "84119")
+p32.dest = Address.of("3365 S 900 W", "Salt Lake City", "UT", "84119")
 p32.available = Time.of("09:05")
 p32.mass = 1
 p32.note = 'Delayed on flight---will not arrive to depot until 9:05'

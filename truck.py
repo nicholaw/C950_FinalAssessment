@@ -14,11 +14,11 @@ AVG_SPEED_MPM = 0.3
 #Define the Truck class
 class Truck:
     def __init__(self, id):
+        self.internalTime = Time.of("08:00")
         self.id = id
         self.totalDist = 0
         self.location = HUB_VERTEX
         self.packages = list()
-        self.internalTime = Time.of("08:00")
 
     def load(self, p):
         if(len(self.packages) >= MAX_PACKAGES):
@@ -30,21 +30,19 @@ class Truck:
 
     def deliver_next(self):
         p = self.packages.pop(0)
-        #p.status = EN_ROUTE
         delivDest = map[p.dest]
         distToDest = delivDest.adjacencies[self.location.id]
-        self.totalDist = totalDist + distToDest
-        self.internalTime.addMinutes(distToDest // AVG_SPEED_MPM)
+        self.totalDist = self.totalDist + distToDest
+        self.internalTime.add_minutes(int(distToDest // AVG_SPEED_MPM))
         self.location = delivDest
-        #p.status = DELIVERED
-        p.timeDelivered = Time.of(str(self.timeOfDay))
-        print("Delivered package " + p.id() + " at " + str(p.timeDelivered))
-        print("Total distance driven(miles): " + self.totalDist)
+        p.timeDelivered = Time.of(str(self.internalTime))
+        print("Delivered package " + str(p.id) + " at " + str(p.timeDelivered))
+        print("Total distance driven(miles): " + str(self.totalDist))
     
     def return_to_hub(self):
         distToDest = HUB_VERTEX.adjacencies[self.location.id]
-        self.totalDist = totalDist + distToDest
-        self.internalTime.addMinutes(distToDest // AVG_SPEED_MPM)
-        self.location = delivDest
+        self.totalDist = self.totalDist + distToDest
+        self.internalTime.add_minutes(int(distToDest // AVG_SPEED_MPM))
+        self.location = HUB_VERTEX
         print("Returning to hub...")
-        print("Total distance driven(miles): " + self.totalDist)
+        print("Total distance driven(miles): " + str(self.totalDist))

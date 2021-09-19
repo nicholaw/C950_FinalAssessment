@@ -42,7 +42,7 @@
 		<name>Taylorsville-Bennion Heritage City Government Office</name>
 		<address zip="84123">
 			<street>1488 4800 S</street>
-			<city>Taylorsville</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[11.0,	6.4,		9.2,		0.0,		5.6,		6.9,		8.6,		4.0,		11.1,	7.3,
@@ -94,7 +94,7 @@
 		<name>Deker Lake</name>
 		<address zip="84119">
 			<street>2300 Parkway Blvd</street>
-			<city>Salt Lake City</city>
+			<city>West Valley City</city>
 		</address>
 		<distances>
 			[8.6,	2.8,		6.3,		4.0,		5.1,		4.3,		4.0,		0.0,		7.7,		9.3,
@@ -133,7 +133,7 @@
 		<name>Taylorsville City Hall</name>
 		<address zip="84118">
 			<street>2600 Taylorsville Blvd</street>
-			<city>Taylorsville</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[6.4,	7.3,		10.4,	1.0,		6.5,		8.7,		8.6,		4.6,		11.9,	9.4,
@@ -146,7 +146,7 @@
 		<name>South Salt Lake Police</name>
 		<address zip="84115">
 			<street>2835 Main St</street>
-			<city>Salt Lake city</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[3.2,	5.3,		3.0,		6.4,		1.5,		0.8,		6.9,		4.8,		4.7,		1.1,
@@ -158,7 +158,7 @@
 	<destination id="12">
 		<name>Council Hall</name>
 		<address zip="84103">
-			<street>300 State St</street>
+			<street>300 State Street</street>
 			<city>Salt Lake City</city>
 		</address>
 		<distances>
@@ -185,7 +185,7 @@
 		<name>Salt Lake County Mental Health</name>
 		<address zip="84119">
 			<street>3148 S 1100 W</street>
-			<city>West Valley City</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[4.4,	4.6,		5.6,		4.3,		2.4,		3.0,		8.0,		3.3,		7.8,		3.7,
@@ -198,7 +198,7 @@
 		<name>Salt Lake County/United Police Dept</name>
 		<address zip="84119">
 			<street>3365 S 900 W</street>
-			<city>West Valley City</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[3.7,	4.5,		5.8,		4.4,		2.7,		3.8,		5.8,		3.4,		6.6,		4.0,
@@ -210,7 +210,7 @@
 	<destination id="16">
 		<name>West Valley Prosecutor</name>
 		<address zip="84119">
-			<street>3575 W Valley Central Sta Bus Loop</street>
+			<street>3575 W Valley Central Station</street>
 			<city>West Valley City</city>
 		</address>
 		<distances>
@@ -224,7 +224,7 @@
 		<name>Housing Auth. of Salt Lake County</name>
 		<address zip="84115">
 			<street>3595 Main St</street>
-			<city>Salt lake City</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[2.0,	6.0,		4.1,		5.3,		0.5,		1.9,		7.7,		5.1,		5.9,		2.3,
@@ -249,7 +249,7 @@
 	<destination id="19">
 		<name>Third District Juvenile Court</name>
 		<address zip="84111">
-			<street>450 S State St</street>
+			<street>410 S State St</street>
 			<city>Salt Lake City</city>
 		</address>
 		<distances>
@@ -263,7 +263,7 @@
 		<name>Cottonwood Regional Softball Complex</name>
 		<address zip="84117">
 			<street>4300 S 1300 E</street>
-			<city>Salt Lake City</city>
+			<city>Millcreek</city>
 		</address>
 		<distances>
 			[1.9,	9.5,		3.3,		5.9,		3.2,		4.9,		11.2,	8.1,		8.5,		3.8,
@@ -276,7 +276,7 @@
 		<name>Holladay City Office</name>
 		<address zip="84117">
 			<street>4580 S 2300 E</street>
-			<city>Holladay City</city>
+			<city>Holladay</city>
 		</address>
 		<distances>
 			[3.4,	10.9,	5.0,		7.4,		5.2,		6.9,		12.7,	10.4,	10.3,	5.8,
@@ -288,7 +288,7 @@
 	<destination id="22">
 		<name>Murray City Museum</name>
 		<address zip="84107">
-			<street>5025 State Street</street>
+			<street>5025 State St</street>
 			<city>Murray</city>
 		</address>
 		<distances>
@@ -302,7 +302,7 @@
 		<name>Valley Regional Softball Complex</name>
 		<address zip="84118">
 			<street>5100 South 2700 West</street>
-			<city>West Valley City</city>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[6.4,	6.9,		9.7,		0.6,		6.0,		9.0,		8.2,		4.2,		11.5,	7.8,
@@ -314,8 +314,8 @@
 	<destination id="24">
 		<name>City Center of Rock Springs</name>
 		<address zip="84117">
-			<street>5383 S 900 E #104</street>
-			<city>West Valley City</city>
+			<street>5383 South 900 East #104</street>
+			<city>Salt Lake City</city>
 		</address>
 		<distances>
 			[2.4,	10.0,	6.1,		6.4,		4.2,		5.9,		11.7,	9.5,		9.5,		4.8,
@@ -327,7 +327,7 @@
 	<destination id="25">
 		<name>Rice Terrace Paviliion Park</name>
 		<address zip="84105">
-			<street>600 E 900 South</street>
+			<street>600 E 900 S</street>
 			<city>Salt Lake City</city>
 		</address>
 		<distances>
