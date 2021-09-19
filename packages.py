@@ -6,6 +6,11 @@ for Package class.
 from verticies import Address
 from timeofday import Time
 
+#define constants
+AT_HUB = "At Hub"
+EN_ROUTE = "En Route"
+DELIVERED = "Delivered"
+
 #define Package class
 class Package:
 	def __init__(self, id):
@@ -17,8 +22,8 @@ class Package:
 		self.note = ''
 		self.truck = -1
 		self.group = set()
-		self.delivered = False
-		self.time_delivered = -1
+		self.status = AT_HUB
+		self.timeDelivered = -1
 
 	def __str__(self):
 		string = "Package:/n"

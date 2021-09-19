@@ -43,6 +43,21 @@ class Time:
                 return True
             else:
                 return False
+    
+    def add_minutes(self, minutes):
+        if(minutes < 0):
+            return
+        hours = 0
+        while(minutes >= 60):
+            hours = hours + 1
+            minutes = minutes - 60
+        self.minute = self.minute + minutes
+        if(self.minute >= 60):
+            self.minute = self.minute - 60
+            hours = hours + 1
+        self.hour = self.hour + hours
+        if(self.hour >= 24):
+            self.hour = self.hour - 24
 
     def __eq__(self, timeB):
         return (self.hour == timeB.hour and self.minute == timeB.minute)
