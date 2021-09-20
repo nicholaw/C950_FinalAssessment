@@ -32,7 +32,7 @@ class Truck:
         p = self.packages.pop(0)
         delivDest = map[p.dest]
         distToDest = delivDest.adjacencies[self.location.id]
-        self.totalDist = self.totalDist + distToDest
+        self.totalDist = int((self.totalDist + distToDest) * 10) / 10
         self.internalTime.add_minutes(int(distToDest // AVG_SPEED_MPM))
         self.location = delivDest
         p.timeDelivered = Time.of(str(self.internalTime))
@@ -41,7 +41,7 @@ class Truck:
     
     def return_to_hub(self):
         distToDest = HUB_VERTEX.adjacencies[self.location.id]
-        self.totalDist = self.totalDist + distToDest
+        self.totalDist = int((self.totalDist + distToDest) * 10) / 10
         self.internalTime.add_minutes(int(distToDest // AVG_SPEED_MPM))
         self.location = HUB_VERTEX
         print("Returning to hub...")
