@@ -22,7 +22,7 @@ class Time:
                 time.minute = minute
         return time
 
-    def isBefore(self, timeB):
+    def is_before(self, timeB):
         if(self.hour > timeB.hour):
             return False
         elif(self.hour < timeB.hour):
@@ -33,7 +33,7 @@ class Time:
             else:
                 return True
 
-    def isAfter(self, timeB):
+    def is_after(self, timeB):
         if(self.hour > timeB.hour):
             return True
         elif(self.hour < timeB.hour):

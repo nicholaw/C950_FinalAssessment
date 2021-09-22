@@ -26,6 +26,16 @@ class Package:
 		string = string + str(self.dest)
 		return string
 
+	def __hash__(self):
+		return ((self.id * 5867) % 128)
+
+	def __eq__(self, other):
+		if(type(self) != type(other)):
+			return False
+		if(self.id != other.id):
+			return False
+		return True
+
 #instantiate the packages
 p1 = Package(1)
 p1.dest = Address.of("195 W Oakland Ave", "Salt Lake City", "UT", "84115")
