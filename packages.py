@@ -20,7 +20,7 @@ class Package:
 		self.timeDelivered = -1
 
 	def __str__(self):
-		string = "Package:/n"
+		string = "Package:\n"
 		string = string + str(self.id) + "\n"
 		string = string + "Destination: "
 		string = string + str(self.dest)
