@@ -6,85 +6,60 @@ ID: 001447619
 from packages import packages, Package
 from verticies import map
 from truck import Truck
-#from bucket import Bucket, DeadlineComparator
+from bucket import Bucket, DeadlineComparator
 
-#Returns true if the provided collection contains the 
-#provided item and false otherwise.
-def contains(coll, item):
-    for i in coll:
-        if(i == item):
-            return True
-    return False
-#end contains
-
-#Inserts the provided item into the provided collection next
-#to its closest geographic neighbor; if the provided item is
-#closer to the provided truck than its neighbor, item is inserted
-#to the left of the neighbor.
-def insert_at_min_dist(pool, pack, truck):
-    if(len(pool) == 0):
-        pool.append(pack)
-    elif(len(pool) == 1):
-        if(find_dist(pack.dest, truck.location.address) < find_dist(pool[0].dest, truck.location.address)):
-            shift_arr_right(pool, 0)
-            pool[0] = item
-        else:
-            coll.append(pack)
-    else:
-        minDist = 9999
-        minIndex = -1
-        i = 0
-        while(i < len(pool)):
-            dist = find_dist(pack, pool[i]) < minDist
-            if(dist < minDist):
-                minIndex = i
-                minDist = dist
-            i += 1
-        if(find_dist(pack.dest, truck.location.address) < find_dist(pool[minIndex].dest, truck.location.address)):
-            shift_arr_right(pool, minIndex)
-            pool[minIndex] = pack
-        else:
-            shift_arr_right(pool, minIndex + 1)
-            pool[minIndex + 1] = pack
-#end insert_closest
-
-#Returns the distance between the two provided items. Returns -1 
-#if the provided items are not adjacent or key does not exist
-def find_dist(item1, item2):
-    try:
-        return map[item2].adjacencies[map[item1]]
-    except:
-        return -1
-    return -1
-#end find_dist
-
-#Shifts elements of the provided array in place one index to the right 
-#starting at the provided start index
-def shift_arr_right(arr, start):
-    i = len(arr) - 1
-    if(i > 0):
-        while(i > start):
-            arr[i + 1] = arr[i]
-            arr[i] = arr[i - 1]
-#end shift_arr_right
-
-#Instantiate delivery trucks
-truck1 = Truck(1)
-#truck2 = Truck(2)
-
-pool0 = list()  #non-assigned packages
-#pool1 = list()  #packages assigned to truck 1
-#pool2 = list()  #packages assigned to truck 2
-
-pak = Package(99)
-print(pool0)
-print(contains(pool0, pak))
+list = list()
 for p in packages:
-    if(p.id == 1):
-        pak = p
-        break
-#endfor
-insert_at_min_dist(pool0, pak, truck1)
-print("-------------------------")
-print(pool0)
-print(contains(pool0, pak))
+	print(str(p.id))
+
+"""
+#-------------------------------------------------------------------------------------------------------------------------------------------------------#
+#	ALGORITHM I
+#	Load packages onto trucks as they appear disregarding distance and special notes
+#-------------------------------------------------------------------------------------------------------------------------------------------------------#
+truck1 = Truck(1)
+truck2 = Truck(2)
+
+currTruck = truck1
+for p in packages:
+	if(len(currTruck.packages) < 16):
+		currTruck.load(p)
+	else:
+		currTruck.make_deliveries()
+		currTruck = truck2
+if(len(truck1.packages) > 0):
+	truck1.make_deliveries()
+if(len(truck2.packages) > 0):
+	truck2.make_deliveries()
+print("ALGORITHM I:")
+print("Truck #1 time finished: " + str(truck1.internalTime))
+print("Truck #2 time finished: " + str(truck2.internalTime))
+print ("Total Distance: " + str(truck1.totalDist + truck2.totalDist))
+print("")
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------#
+#	ALGORITHM II
+#	Sort packages by minimum geographical distance before loading trucks
+#-------------------------------------------------------------------------------------------------------------------------------------------------------#
+truck1 = Truck(1)
+truck2 = Truck(2)
+currTruck = truck1
+sortedPackages = list()
+for p in packages:
+	insert_at_min_dist(sortedPackages, p, currTruck)
+for p in sortedPackages:
+	if(len(currTruck.packages) < 16):
+		currTruck.load(p)
+	else:
+		currTruck.make_deliveries()
+		currTruck = truck2
+if(len(truck1.packages) > 0):
+	truck1.make_deliveries()
+if(len(truck2.packages) > 0):
+	truck2.make_deliveries()
+print("ALGORITHM II:")
+print("Truck #1 time finished: " + str(truck1.internalTime))
+print("Truck #2 time finished: " + str(truck2.internalTime))
+print ("Total Distance: " + str(truck1.totalDist + truck2.totalDist))
+print("")
+"""
