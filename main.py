@@ -29,7 +29,7 @@ def insert_at_min_dist(pool, pack, truck):
             shift_arr_right(pool, 0)
             pool[0] = item
         else:
-            coll.append(pack)
+            pool.append(pack)
     else:
         minDist = 9999
         minIndex = -1
@@ -64,8 +64,13 @@ def shift_arr_right(arr, start):
     i = len(arr) - 1
     if(i > 0):
         while(i > start):
-            arr[i + 1] = arr[i]
-            arr[i] = arr[i - 1]
+            try:
+                arr[i + 1] = arr[i]
+                arr[i] = arr[i - 1]
+            except IndexError:
+                arr.append(arr[i])
+            finally:
+                i += 1
 #end shift_arr_right
 
 #Instantiate delivery trucks
@@ -76,15 +81,7 @@ pool0 = list()  #non-assigned packages
 #pool1 = list()  #packages assigned to truck 1
 #pool2 = list()  #packages assigned to truck 2
 
-pak = Package(99)
-print(pool0)
-print(contains(pool0, pak))
-for p in packages:
-    if(p.id == 1):
-        pak = p
-        break
-#endfor
-insert_at_min_dist(pool0, pak, truck1)
-print("-------------------------")
-print(pool0)
-print(contains(pool0, pak))
+arr = [1, 2, 4, 5, 6]
+shift_arr_right(arr, 2)
+arr[2] = 3
+print(arr)
