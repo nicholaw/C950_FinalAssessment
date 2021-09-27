@@ -85,9 +85,9 @@ while(len(packages) > 0):
     if(len(currTruck.packages) >= 16):
         currTruck.make_deliveries()
         if(currTruck == truck1):
-            currTruck == truck2
+            currTruck = truck2
         else:
-            currTruck == truck1
+            currTruck = truck1
     if(len(currTruck.packages) < (MAX_PACKAGES / 2)):
         nextPak = None
         minDist = 999
@@ -119,9 +119,15 @@ while(len(packages) > 0):
                     minDist = tempDist
         currTruck.load(nextPak)
         packages.remove(nextPak)
+if(len(truck1.packages) > 0):
+    truck1.make_deliveries()
+if(len(truck2.packages) > 0):
+    truck2.make_deliveries()
 
 print("ALGORITHM II:")
+print("Truck #1 deliveries made: " + str(truck1.deliveries))
 print("Truck #1 time finished: " + str(truck1.internalTime))
+print("Truck #2 deliveries made: " + str(truck2.deliveries))
 print("Truck #2 time finished: " + str(truck2.internalTime))
 print ("Total Distance: " + str(truck1.totalDist + truck2.totalDist))
 print("")

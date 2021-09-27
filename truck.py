@@ -19,6 +19,7 @@ class Truck:
 		self.totalDist = 0
 		self.location = HUB_VERTEX
 		self.packages = list()
+		self.deliveries = 0
 
 	def load(self, p):
 		if(len(self.packages) >= MAX_PACKAGES):
@@ -35,6 +36,7 @@ class Truck:
 		self.internalTime.add_minutes(int(distToDest // AVG_SPEED_MPM))
 		self.location = delivDest
 		p.timeDelivered = Time.of(str(self.internalTime))
+		self.deliveries += 1
     
 	def return_to_hub(self):
 		distToDest = HUB_VERTEX.adjacencies[self.location.id]
