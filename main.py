@@ -9,38 +9,13 @@ from truck import Truck, MAX_PACKAGES
 from bucket import Bucket, DeadlineComparator
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------#
-#	ALGORITHM I
-#	Load packages onto trucks as they appear disregarding distance and special notes
-#-------------------------------------------------------------------------------------------------------------------------------------------------------#
-truck1 = Truck(1)
-truck2 = Truck(2)
-currTruck = truck1
-list = list()
-for p in packages:
-    if(len(currTruck.packages) >= 16):
-        currTruck.make_deliveries()
-        if(currTruck == truck1):
-            currTruck = truck2
-        else:
-            currTruck = truck1
-    currTruck.load(p)
-if(len(truck1.packages) > 0):
-    truck1.make_deliveries()
-if(len(truck2.packages) > 0):
-    truck2.make_deliveries()
-print("ALGORITHM I:")
-print("Truck #1 time finished: " + str(truck1.internalTime))
-print("Truck #2 time finished: " + str(truck2.internalTime))
-print("Total Distance: " + str(truck1.totalDist + truck2.totalDist))
-print("")
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------------#
 #	ALGORITHM II
-#	Sort packages by minimum geographical distance before loading trucks
+#	While trucks are less than half full, load packages which are farther away from hub;
+#	while trucks are more than half full, load packages which are closer to hub
 #-------------------------------------------------------------------------------------------------------------------------------------------------------#
 """
 While len(packages) < MAX/2  -->  add shortest distance moving away from hub
-While len(packages) < MAX    -->  add shortest distance moving towards hub
+While len(packages) < MAX      -->  add shortest distance moving towards hub
 
 Given:  package A is loaded on truck, package B is being analyzed...
         if(dist_from_hub(A) > dist_from_hub(B))...
@@ -76,49 +51,76 @@ def find_dist(add1, add2):
 def find_dist_from_hub(add1):
     return map[add1].adjacencies[0]
 
+#Returns false if the provided package cannot be loaded onto the provided truck and true otherwise
+def is_eligable(pak, truck):
+	if(pak.available.is_before(truck.internalTime)):
+		return False
+	if(p.truck > 0 and not(p.truck == currTruck.id)):
+		return False
+	return True
+
 truck1 = Truck(1)
 truck2 = Truck(2)
 currTruck = truck1
 
-#Moves packages from set of all packages to trucks for delivery
+"""
+Moves packages from set of all packages to trucks for delivery; Trucks make deliveries
+once the truck is full or there are no more available packages to load
+"""
 while(len(packages) > 0):
-    if(len(currTruck.packages) >= 16):
+	#Check if the truck is full; if full, make deliveries
+    if(len(currTruck.packages) >= MAX_PACKAGES):
         currTruck.make_deliveries()
         if(currTruck == truck1):
             currTruck = truck2
         else:
             currTruck = truck1
+	#Check if truck is less than half full
     if(len(currTruck.packages) < (MAX_PACKAGES / 2)):
         nextPak = None
         minDist = 999
+        #Check if the truck is empty
         if(len(currTruck.packages) == 0):
             for p in packages:
-                tempDist = find_dist_from_hub(p.dest)
-                if(tempDist < minDist):
-                    nextPak = p
-                    minDist = tempDist
-            currTruck.load(nextPak)
-            packages.remove(nextPak)
+				#Check if the package is eligable for loading onto the current truck
+				if(is_eligable(p, currTruck)):
+					tempDist = find_dist_from_hub(p.dest)
+					if(tempDist < minDist):
+						nextPak = p
+						minDist = tempDist
+			#Check nextPak isn't None
+			if(type(nextPak) != type(None)):
+				currTruck.load(nextPak)
+				packages.remove(nextPak)
         else:
             nextPak = None
             minDist = 999
             for p in divide_direction(currTruck.packages[len(currTruck.packages) - 1], False):
-                tempDist = find_dist(p.dest, currTruck.packages[len(currTruck.packages) - 1].dest)
-                if(tempDist < minDist):
-                    nextPak = p
-                    minDist = tempDist
-            currTruck.load(nextPak)
-            packages.remove(nextPak)
+				#Check if the package is eligable for loading onto the current truck
+				if(is_eligable(p, currTruck)):
+					tempDist = find_dist(p.dest, currTruck.packages[len(currTruck.packages) - 1].dest)
+					if(tempDist < minDist):
+						nextPak = p
+						minDist = tempDist
+			#Check nextPak isn't None
+			if(type(nextPak) != type(None)):
+				currTruck.load(nextPak)
+				packages.remove(nextPak)
+	#Check if truck is less than full
     elif(len(currTruck.packages) < MAX_PACKAGES):
         nextPak = None
         minDist = 999
         for p in divide_direction(currTruck.packages[len(currTruck.packages) - 1], True):
-            tempDist = find_dist(p.dest, currTruck.packages[len(currTruck.packages) - 1].dest)
-            if(tempDist < minDist):
-                    nextPak = p
-                    minDist = tempDist
-        currTruck.load(nextPak)
-        packages.remove(nextPak)
+			#Check if the package is eligable for loading onto the current truck
+			if(is_eligable(p, currTruck)):
+				tempDist = find_dist(p.dest, currTruck.packages[len(currTruck.packages) - 1].dest)
+				if(tempDist < minDist):
+						nextPak = p
+						minDist = tempDist
+        #Check nextPak isn't None
+		if(type(nextPak) != type(None)):
+			currTruck.load(nextPak)
+			packages.remove(nextPak)
 if(len(truck1.packages) > 0):
     truck1.make_deliveries()
 if(len(truck2.packages) > 0):
