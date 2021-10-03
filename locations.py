@@ -1,6 +1,6 @@
 """
-Instantiates all possible delivery destinations by reading data from
-resources\destinations.xml
+Instantiates all possible delivery destinations by reading
+data from xml file
 """
 
 from address import Address
@@ -22,3 +22,5 @@ for item in root.findall(".//destination"):
 		elif(child.tag == "zip"):
 			destination.zip = child.text
 	allLocations.add(destination)
+
+#Define distances among locations

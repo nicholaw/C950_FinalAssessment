@@ -9,6 +9,7 @@ class Address:
 		self.city = ""
 		self.state = "UT"
 		self.zip = ""
+		self.distances = dict()
 
 	def of(street, city, state, zip):
 		address = Address("")
