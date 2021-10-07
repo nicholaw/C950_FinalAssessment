@@ -53,6 +53,12 @@ class Time:
 		while(self.hour >= 24):
 			self.hour -= 24
 	
+	def copy_time(time):
+		copy = Time()
+		copy.hour = time.hour
+		copy.minute = time.minute
+		return copy
+	
 	def step(self):
 		self.add_minutes(1)
 

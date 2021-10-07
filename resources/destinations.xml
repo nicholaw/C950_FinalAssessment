@@ -132,7 +132,7 @@
 	<destination name="Salt Lake City Division of Health Services">
 		<street>177 W Price Ave</street>
 		<city>Salt Lake City</city>
-		<zip>84125</zip>
+		<zip>84115</zip>
 		<distances>
 			<dist name="South Salt Lake Public Works" dist="1.9" />
 			<dist name="Salt Lake City Streets and Sanitation" dist="7.9" />

@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 #Create element tree from xml file and instantiate set for storing destinations
 tree = ET.parse("resources/destinations.xml")
 root = tree.getroot()
-allLocations = set()
+allLocations = dict()
 
 #Returns the location with the provided name from the set of all locations
 def get_location(name):
@@ -28,7 +28,7 @@ for item in root.findall(".//destination"):
 			destination.city = child.text
 		elif(child.tag == "zip"):
 			destination.zip = child.text
-	allLocations.add(destination)
+	allLocations[destination] = destination
 
 #Define distances among locations
 for item in root.findall(".//destination"):

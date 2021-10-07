@@ -6,6 +6,7 @@ from timeofday import Time
 from locations import allLocations
 from packages import allPackages
 from truck import Truck
+from constants import MAX_PACKAGES
 
 class Controller:
 	def __init__(self, numTrucks, startTime, hubName):
@@ -13,6 +14,7 @@ class Controller:
 		self.hub = Controller.set_hub(hubName)
 		self.fleet = set()
 		self.populate_fleet(numTrucks)
+		self.packagesDelivered = 0
 	
 	def set_hub(hubName):
 		for location in allLocations:
@@ -30,15 +32,29 @@ class Controller:
 				i += 1
 	
 	def load_truck(truck):
-		while((len(truck.cargo) < Truck.MAX_PACKAGES) and (len(allPackages) > 0)):
+		while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
 			truck.load(allPackages.pop())
 	
 	def start(self):
 		while(len(allPackages) > 0):
-			for truck in fleet:
-				if(truck.location == hub):
-					load_truck(truck)
+			for truck in self.fleet:
+				if(truck.location == self.hub):
+					Controller.load_truck(truck)
 					truck.make_deliveries()
 				else:
 					truck.check_status()
-		self.globalTime.step()
+			self.globalTime.step()
+		self.finish()
+	
+	def finish(self):
+		while(self.unfinished_deliveries()):
+			for truck in self.fleet:
+				truck.check_status()
+			self.globalTime.step()
+	
+	def unfinished_deliveries(self):
+		unfinished = False
+		for truck in self.fleet:
+			if(len(truck.cargo) > 0):
+				unfinished = True
+		return unfinished

@@ -8,18 +8,20 @@ from timeofday import Time
 class Package:
 	def __init__(self, id):
 		self.id = id
-		self.dest = Address("NONE")
+		self.dest = None
 		self.available = Time.of("08:00")
 		self.deadline = Time.of("23:59")
-		self.timeDelivered = -1
+		self.timeDelivered = None
+		self.status = "At hub"
 		self.mass = 1
 		self.note = ''
 		self.truck = -1
 		self.group = set()
 
 	def __str__(self):
-		string = "(" + str(self.id) + ")\n"
-		string = string + str(self.dest)
+		string = "Package #" + str(self.id) + "\n"
+		string += (str(self.dest) + "\n")
+		string += ("Status: " + self.status)
 		return string
 
 	def __hash__(self):
