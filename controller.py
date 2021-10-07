@@ -57,4 +57,21 @@ class Controller:
 		for truck in self.fleet:
 			if(len(truck.cargo) > 0):
 				unfinished = True
+			elif(truck.status == "Delivering package"):
+				unfinished = True
 		return unfinished
+	
+	def print_stats(self):
+		print("Deliveries: " + str(self.packagesDelivered))
+		print("Time: " + str(self.globalTime))
+		print("Distance(mi):")
+		total = 0
+		for truck in self.fleet:
+			num = Controller.truncate_to_tenth(truck.totalDist)
+			total += num
+			print("   " + str(num))
+		print("Total Distance: " + str(total))
+	
+	def truncate_to_tenth(num):
+		num = int(num * 10)
+		return (num / 10.0)

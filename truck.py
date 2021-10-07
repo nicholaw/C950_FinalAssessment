@@ -32,7 +32,7 @@ class Truck:
 	
 	def deliver(self, package):
 		self.currentPackage = package
-		self.status = "Delivering package #" + str(package.id)
+		self.status = "Delivering package"
 		self.destination = allLocations[package.dest]
 		distToDest = self.location.distances[self.destination]
 		self.totalDist += distToDest
@@ -41,7 +41,6 @@ class Truck:
 		self.location = None
     
 	def return_to_hub(self):
-		self.status = "Returning to hub"
 		self.destination = self.controller.hub
 		distToDest = self.location.distances[self.destination]
 		self.totalDist += distToDest
@@ -60,7 +59,7 @@ class Truck:
 				else:
 					self.currentPackage.status = "Delivered"
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
-					print(str(self.currentPackage))
+					print(str(self.currentPackage) + " at " + str(self.controller.globalTime) + " by truck #" + str(self.id))
 					print("")
 					self.controller.packagesDelivered += 1
 					self.location = self.destination
@@ -72,8 +71,10 @@ class Truck:
 	
 	def make_deliveries(self):
 		if(len(self.cargo) > 0):
+			self.status = "Delivering package"
 			self.deliver(self.cargo.pop())
 		elif(self.location != self.controller.hub):
+			self.status = "Returning to hub"
 			self.return_to_hub()
 	
 	def __str__(self):
