@@ -23,11 +23,17 @@ class Truck:
 		self.eta = None
 
 	def load(self, p):
+		if(p == None):
+			return
+		
 		if(len(self.cargo) >= MAX_PACKAGES):
 			return False
 		else:
 			self.cargo.append(p)
 			p.status = "Out for delivery"
+			print("Truck #" + str(self.id) + " successfully loaded:")
+			print(str(p))
+			print("")
 			return True
 	
 	def deliver(self, package):

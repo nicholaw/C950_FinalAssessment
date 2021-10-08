@@ -41,43 +41,51 @@ class Controller:
 		packageToLoad = None
 		if(len(truck.cargo) == 0):
 			packageToLoad = Controller.find_closest(self.hub, allPackages)
-		else:
-			while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
-				if(len(truck.cargo) <= (MAX_PACKAGES / 2)):
-					packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], False)
-				else:
-					packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], True)
-		truck.load(packageToLoad)
-		allPackages.remove(packageToLoad)
+			truck.load(packageToLoad)
+			allPackages.remove(packageToLoad)
+			
+		while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
+			if(len(truck.cargo) < (MAX_PACKAGES / 2)):
+				packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], False)
+			else:
+				packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], True)
+			truck.load(packageToLoad)
+			allPackages.remove(packageToLoad)	
 	
-	def find_next_package(self, loadedPagkage, towardsHub):
+	def find_next_package(self, loadedPackage, towardsHub):
 		closerToHub = set()
 		fartherFromHub = set()
 		for package in allPackages:
-			if(Controller.find_distance(self.hub, package.dest) <= Controller.find_distance(self.hub, loadedPagkage.dest)):
+			if(Controller.find_distance(self.hub, package.dest) <= Controller.find_distance(self.hub, loadedPackage.dest)):
 				closerToHub.add(package)
 			else:
 				fartherFromHub.add(package)
 		if(towardsHub):
 			if(len(closerToHub) == 0):
-				return find_closest(loadedPagkage.dest, fartherFromHub)
+				return Controller.find_closest(loadedPackage.dest, fartherFromHub)
 			else:
-				return find_closest(loadedPagkage.dest, closerToHub)
+				return Controller.find_closest(loadedPackage.dest, closerToHub)
 		else:
 			if(len(fartherFromHub) == 0):
-				return find_closest(loadedPagkage.dest, closerToHub)
+				return Controller.find_closest(loadedPackage.dest, closerToHub)
 			else:
-				return find_closest(loadedPagkage.dest, fartherFromHub)
+				return Controller.find_closest(loadedPackage.dest, fartherFromHub)
 	
 	def find_closest(locationA, collection):
 		minDist = 999
 		closestPackage = None
 		for item in collection:
-			dist = Controller.find_distance(locationA, item.dest)
-			if(dist < minDist):
-				minDist = dist
-				closestPackage = item
-		return closestPackage
+			try:
+				dist = Controller.find_distance(locationA, item.dest)
+				if(dist < minDist):
+					minDist = dist
+					closestPackage = item
+			except:
+				print("ERROR:")
+				print(str(item))
+				print("")
+			finally:
+				return closestPackage
 	
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
@@ -86,8 +94,9 @@ class Controller:
 		while(len(allPackages) > 0):
 			for truck in self.fleet:
 				if(truck.location == self.hub):
-					self.load_truck(truck)
-					truck.make_deliveries()
+					if(len(allPackages) > 0):
+						self.load_truck(truck)
+						truck.make_deliveries()
 				else:
 					truck.check_status()
 			self.globalTime.step()
