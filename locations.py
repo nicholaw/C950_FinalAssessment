@@ -33,6 +33,7 @@ for item in root.findall(".//destination"):
 #Define distances among locations
 for item in root.findall(".//destination"):
 	locationA = get_location(item.attrib["name"])
+	locationA.distances[locationA] = 0.0
 	for child in item:
 		if(child.tag == "distances"):
 			for grandchild in child:

@@ -23,18 +23,13 @@ class Truck:
 		self.eta = None
 
 	def load(self, p):
-		if(p == None):
-			return
-		
-		if(len(self.cargo) >= MAX_PACKAGES):
-			return False
-		else:
-			self.cargo.append(p)
-			p.status = "Out for delivery"
-			print("Truck #" + str(self.id) + " successfully loaded:")
-			print(str(p))
-			print("")
-			return True
+		if(p != None):
+			if(len(self.cargo) >= MAX_PACKAGES):
+				return False
+			else:
+				self.cargo.append(p)
+				p.status = "Out for delivery"
+				return True
 	
 	def deliver(self, package):
 		self.currentPackage = package
@@ -63,12 +58,14 @@ class Truck:
 					self.eta = None
 					self.destination = None
 				else:
+					self.location = self.destination
 					self.currentPackage.status = "Delivered"
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
+					#if(self.id == 1):
 					print(str(self.currentPackage) + " at " + str(self.controller.globalTime) + " by truck #" + str(self.id))
+					#print("(Distance from hub: " + str(self.location.distances[self.controller.hub]) + ")")
 					print("")
 					self.controller.packagesDelivered += 1
-					self.location = self.destination
 					self.destination = None
 					self.currentPackage = None
 					self.eta = None

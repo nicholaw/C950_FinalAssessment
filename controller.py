@@ -38,54 +38,20 @@ class Controller:
 	#If the truck is less than half full, loads a package which is farther from the hub than the last package loaded;
 	#If the truck is more than half full, loads a package which is closer to the hub than the last package
 	def load_truck(self, truck):
-		packageToLoad = None
-		if(len(truck.cargo) == 0):
-			packageToLoad = Controller.find_closest(self.hub, allPackages)
-			truck.load(packageToLoad)
-			allPackages.remove(packageToLoad)
-			
 		while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
-			if(len(truck.cargo) < (MAX_PACKAGES / 2)):
-				packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], False)
-			else:
-				packageToLoad = self.find_next_package(truck.cargo[len(truck.cargo) - 1], True)
-			truck.load(packageToLoad)
-			allPackages.remove(packageToLoad)	
-	
-	def find_next_package(self, loadedPackage, towardsHub):
-		closerToHub = set()
-		fartherFromHub = set()
-		for package in allPackages:
-			if(Controller.find_distance(self.hub, package.dest) <= Controller.find_distance(self.hub, loadedPackage.dest)):
-				closerToHub.add(package)
-			else:
-				fartherFromHub.add(package)
-		if(towardsHub):
-			if(len(closerToHub) == 0):
-				return Controller.find_closest(loadedPackage.dest, fartherFromHub)
-			else:
-				return Controller.find_closest(loadedPackage.dest, closerToHub)
-		else:
-			if(len(fartherFromHub) == 0):
-				return Controller.find_closest(loadedPackage.dest, closerToHub)
-			else:
-				return Controller.find_closest(loadedPackage.dest, fartherFromHub)
-	
-	def find_closest(locationA, collection):
-		minDist = 999
-		closestPackage = None
-		for item in collection:
-			try:
-				dist = Controller.find_distance(locationA, item.dest)
+			nextPackage = None
+			minDist = 999
+			for p in allPackages:
+				dist = 999
+				if(len(truck.cargo) > 0):
+					dist = Controller.find_distance(truck.cargo[len(truck.cargo) - 1].dest, p.dest)
+				else:
+					dist = Controller.find_distance(self.hub, p.dest)
 				if(dist < minDist):
 					minDist = dist
-					closestPackage = item
-			except:
-				print("ERROR:")
-				print(str(item))
-				print("")
-			finally:
-				return closestPackage
+					nextPackage = p
+			truck.load(nextPackage)
+			allPackages.remove(nextPackage)
 	
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
