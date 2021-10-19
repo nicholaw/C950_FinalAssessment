@@ -3,6 +3,7 @@ Class which allows user to query to program with the console for status of
 trucks and packages
 """
 
+from timeofday import Time
 import re
 
 class UserInterface:
@@ -22,6 +23,7 @@ class UserInterface:
 		print("fullreport\tDisplay info for all trucks and packages at end-of-day.")
 		print("help\t\tDisplay a list of  valid commands.")
 		print("exit\t\tTerminate the application.")
+		print("NOTE: times must be entered in 24-hour format and include a leading '0' for times before 10:00")
 		print("")
 		self.prompt_query()
 	
@@ -32,6 +34,26 @@ class UserInterface:
 		print("Command not recognized.")
 		print("List of valid commands:")
 		self.display_help()
+	
+	def display_package_eod(self, id):
+		print("Display package " + str(id))
+		print("")
+		self.prompt_query()
+	
+	def display_package(self, id, time):
+		print("Display package " + str(id) + " at " +  str(time))
+		print("")
+		self.prompt_query()
+	
+	def display_truck_eod(self, id):
+		print("Display truck " + str(id))
+		print("")
+		self.prompt_query()
+	
+	def display_truck(self, id, time):
+		print("Display truck " + str(id) + " at " +  str(time))
+		print("")
+		self.prompt_query()
 	
 	def parse_query(self, query):
 		query = query.lower()
@@ -44,16 +66,18 @@ class UserInterface:
 			self.display_help()
 		elif(re.search("^p[0-9]+", query)):
 			if(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}", query)):
-				print("DISPLAY specific time")
-				self.prompt_query()
+				self.display_package(UserInterface.parse_id(query), UserInterface.parse_time(query))
 			elif(re.search("^p[0-9]+$", query)):
-				print("Display eod")
-				self.prompt_query()
+				self.display_package_eod(UserInterface.parse_id(query))
 			else:
 				self.display_error()
 		elif(re.search("^t[0-9]+", query)):
-			print("TRUCK!")
-			self.prompt_query()
+			if(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}", query)):
+				self.display_truck(UserInterface.parse_id(query), UserInterface.parse_time(query))
+			elif(re.search("^t[0-9]+$", query)):
+				self.display_truck_eod(UserInterface.parse_id(query))
+			else:
+				self.display_error()
 		else:
 			self.display_error()
 	
@@ -72,3 +96,23 @@ class UserInterface:
 		for item in set:
 			newSet[item] = item
 		return newSet
+	
+	#Returns a time from the provided string assuming the last five characters of the string represent the time
+	def parse_time(timeString):
+		string = ""
+		index = len(timeString) - 5
+		while(index < len(timeString)):
+			string += timeString[index]
+			index += 1
+		return Time.of(string)
+	
+	#Returns an integer id from the provided string assuming the id starts at the second character and is delimited by a whitespace
+	def parse_id(idString):
+		string = ""
+		index = 1
+		while(idString[index] != " "):
+			string += idString[index]
+			index += 1
+			if(index >= len(idString)):
+				break
+		return int(string)
