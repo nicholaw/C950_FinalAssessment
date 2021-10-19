@@ -61,10 +61,6 @@ class Truck:
 					self.location = self.destination
 					self.currentPackage.status = "Delivered"
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
-					#if(self.id == 1):
-					print(str(self.currentPackage) + " at " + str(self.controller.globalTime) + " by truck #" + str(self.id))
-					#print("(Distance from hub: " + str(self.location.distances[self.controller.hub]) + ")")
-					print("")
 					self.controller.packagesDelivered += 1
 					self.destination = None
 					self.currentPackage = None
@@ -79,6 +75,9 @@ class Truck:
 		elif(self.location != self.controller.hub):
 			self.status = "Returning to hub"
 			self.return_to_hub()
+	
+	def __hash__(self):
+		return self.id % 1024
 	
 	def __str__(self):
 		string = "Truck #" + str(self.id) + "\n"

@@ -7,6 +7,7 @@ from locations import allLocations
 from packages import allPackages
 from truck import Truck
 from constants import MAX_PACKAGES
+from ui import UserInterface
 
 class Controller:
 	#Constructs this Controller object
@@ -16,6 +17,7 @@ class Controller:
 		self.fleet = set()
 		self.populate_fleet(numTrucks)
 		self.packagesDelivered = 0
+		self.ui = UserInterface(allPackages, self.fleet)
 	
 	#Sets the hub location based on the provided location name
 	def set_hub(hubName):
@@ -73,6 +75,7 @@ class Controller:
 			for truck in self.fleet:
 				truck.check_status()
 			self.globalTime.step()
+		self.ui.start()
 	
 	def unfinished_deliveries(self):
 		unfinished = False

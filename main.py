@@ -7,4 +7,3 @@ from controller import Controller
 
 controller = Controller(2, Time.of("08:00"), "Western Governors University")
 controller.start()
-controller.print_stats()
