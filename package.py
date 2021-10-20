@@ -11,17 +11,42 @@ class Package:
 		self.dest = None
 		self.available = Time.of("08:00")
 		self.deadline = Time.of("23:59")
+		self.timeLoaded = None
 		self.timeDelivered = None
-		self.status = "At hub"
 		self.mass = 1
 		self.note = ''
 		self.truck = -1
 		self.group = set()
+	
+	def print_status(self, timeOfReport):
+		#print the status of this package as of right now
+		if(timeOfReport == None):
+			if(self.timeDelivered != None):
+				print("Status: DELIVERED")
+				print("Time of delivery: " + str(self.timeDelivered))
+				print("Delivered by truck #" + str(self.truck))
+			elif(self.timeLoaded != None):
+				print("Status: EN ROUTE")
+				print("Time of loading: " + str(self.timeLoaded))
+				print("Loaded aboard truck #" + str(self.truck))
+			else:
+				print("Status: AT HUB")
+		#print the status of this package as of the provided time
+		else:
+			if(timeOfReport.is_before(self.timeLoaded) or self.timeLoaded == None):
+				print("Status: AT HUB")
+			elif(timeOfReport.is_before(self.timeDelivered) or self.timeDelivered == None):
+				print("Status: EN ROUTE")
+				print("Time of loading: " + str(self.timeLoaded))
+				print("Loaded aboard truck #" + str(self.truck))
+			else:
+				print("Status: DELIVERED")
+				print("Time of delivery: " + str(self.timeDelivered))
+				print("Delivered by truck #" + str(self.truck))
 
 	def __str__(self):
 		string = "Package #" + str(self.id) + "\n"
 		string += (str(self.dest) + "\n")
-		string += ("Status: " + self.status)
 		return string
 
 	def __hash__(self):
@@ -30,6 +55,4 @@ class Package:
 	def __eq__(self, other):
 		if(type(self) != type(other)):
 			return False
-		if(self.id != other.id):
-			return False
-		return True
+		return (self.id == other.id)

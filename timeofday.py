@@ -63,6 +63,8 @@ class Time:
 		self.add_minutes(1)
 
 	def __eq__(self, timeB):
+		if(type(self) != type(timeB)):
+			return False
 		return (self.hour == timeB.hour and self.minute == timeB.minute)
 
 	def __str__(self):
@@ -77,3 +79,6 @@ class Time:
 		else:
 			string = string + str(self.minute)
 		return string
+	
+	def __hash__(self):
+		return (self.hour * 563 + self.minute * 571) % 1024

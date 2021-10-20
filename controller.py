@@ -6,7 +6,7 @@ from timeofday import Time
 from locations import allLocations
 from packages import allPackages
 from truck import Truck
-from constants import MAX_PACKAGES
+from constants import MAX_PACKAGES, truncate_to_tenth
 from ui import UserInterface
 
 class Controller:
@@ -96,7 +96,3 @@ class Controller:
 			total += num
 			print("   " + str(num))
 		print("Total Distance: " + str(total))
-	
-	def truncate_to_tenth(num):
-		num = int(num * 10)
-		return (num / 10.0)

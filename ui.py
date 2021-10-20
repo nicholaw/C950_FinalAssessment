@@ -4,6 +4,8 @@ trucks and packages
 """
 
 from timeofday import Time
+from package import Package
+from truck import Truck
 import re
 
 class UserInterface:
@@ -35,25 +37,27 @@ class UserInterface:
 		print("List of valid commands:")
 		self.display_help()
 	
-	def display_package_eod(self, id):
-		print("Display package " + str(id))
-		print("")
-		self.prompt_query()
-	
 	def display_package(self, id, time):
-		print("Display package " + str(id) + " at " +  str(time))
-		print("")
-		self.prompt_query()
-	
-	def display_truck_eod(self, id):
-		print("Display truck " + str(id))
-		print("")
-		self.prompt_query()
+		try:
+			p = self.allPackages[id]
+			print(str(p))
+			p.print_status(time)
+		except:
+			print("No match found for package id #" + str(id))
+		finally:
+			print("")
+			self.prompt_query()
 	
 	def display_truck(self, id, time):
-		print("Display truck " + str(id) + " at " +  str(time))
-		print("")
-		self.prompt_query()
+		try:
+			t = self.allTrucks[id]
+			print(str(t))
+			t.display_status(time)
+		except KeyError:
+			print("No match found for truck id #" + str(id))
+		finally:
+			print("")
+			self.prompt_query()
 	
 	def parse_query(self, query):
 		query = query.lower()
@@ -68,14 +72,14 @@ class UserInterface:
 			if(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}", query)):
 				self.display_package(UserInterface.parse_id(query), UserInterface.parse_time(query))
 			elif(re.search("^p[0-9]+$", query)):
-				self.display_package_eod(UserInterface.parse_id(query))
+				self.display_package(UserInterface.parse_id(query), None)
 			else:
 				self.display_error()
 		elif(re.search("^t[0-9]+", query)):
 			if(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}", query)):
 				self.display_truck(UserInterface.parse_id(query), UserInterface.parse_time(query))
 			elif(re.search("^t[0-9]+$", query)):
-				self.display_truck_eod(UserInterface.parse_id(query))
+				self.display_truck(UserInterface.parse_id(query), None)
 			else:
 				self.display_error()
 		else:
@@ -91,10 +95,14 @@ class UserInterface:
 	def exit(self):
 		return
 	
+	#Returns a copy of the provided set
 	def copy_set(set):
 		newSet = dict()
 		for item in set:
-			newSet[item] = item
+			try:
+				newSet[item.id] = item
+			except AttributeError:
+				print("Unable to copy " + str(item) + " into UI dictionary")
 		return newSet
 	
 	#Returns a time from the provided string assuming the last five characters of the string represent the time
