@@ -18,16 +18,18 @@ class UserInterface:
 		self.parse_query(query)
 	
 	def display_help(self):
-		print("p[id] [HH:mm]\tDisplay info for the package with the provided package id at the provided time.")
+		print("p[id] [HH:mm]\tDisplay info for the package with the specified package id at the provided time.")
 		print("\t\t   If time is omitted, displays info at EOD.")
-		print("t[id] [HH:mm]\tDisplay info for the truck with the provided truck id at the provided time.")
+		print("pall [HH:mm]\tDisplay info for all packages at the specified time.")
+		print("\t\t   If time is omitted, displays info at EOD.")
+		print("t[id] [HH:mm]\tDisplay info for the truck with the specified truck id at the provided time.")
+		print("\t\t   If time is omitted, displays info at EOD.")
+		print("tall [HH:mm]\tDisplay info for all truks at the specified time.")
 		print("\t\t   If time is omitted, displays info at EOD.")
 		print("fullreport\tDisplay info for all trucks and packages at end-of-day.")
 		print("help\t\tDisplay a list of  valid commands.")
 		print("exit\t\tTerminate the application.")
 		print("NOTE: times must be entered in 24-hour format and include a leading '0' for times before 10:00")
-		print("")
-		self.prompt_query()
 	
 	def display_full_report(self):
 		print("TODO")
@@ -40,24 +42,16 @@ class UserInterface:
 	def display_package(self, id, time):
 		try:
 			p = self.allPackages[id]
-			print(str(p))
 			p.print_status(time)
-		except:
+		except KeyError:
 			print("No match found for package id #" + str(id))
-		finally:
-			print("")
-			self.prompt_query()
 	
 	def display_truck(self, id, time):
 		try:
 			t = self.allTrucks[id]
-			print(str(t))
-			t.display_status(time)
+			t.print_status(time)
 		except KeyError:
 			print("No match found for truck id #" + str(id))
-		finally:
-			print("")
-			self.prompt_query()
 	
 	def parse_query(self, query):
 		query = query.lower()
@@ -65,25 +59,49 @@ class UserInterface:
 		if(query == "fullreport"):
 			self.display_full_report()
 		elif(query == "exit"):
-			self.exit()
+			return
 		elif(query ==  "help"):
 			self.display_help()
 		elif(re.search("^p[0-9]+", query)):
-			if(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}", query)):
+			if(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
 				self.display_package(UserInterface.parse_id(query), UserInterface.parse_time(query))
 			elif(re.search("^p[0-9]+$", query)):
 				self.display_package(UserInterface.parse_id(query), None)
 			else:
 				self.display_error()
 		elif(re.search("^t[0-9]+", query)):
-			if(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}", query)):
+			if(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
 				self.display_truck(UserInterface.parse_id(query), UserInterface.parse_time(query))
 			elif(re.search("^t[0-9]+$", query)):
 				self.display_truck(UserInterface.parse_id(query), None)
 			else:
 				self.display_error()
+		elif(re.search("^pall", query)):
+			if(re.search("^pall$", query)):
+				for p in self.allPackages:
+					self.display_package(self.allPackages[p].id, None)
+					print("")
+			elif(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
+				for p in self.allPackages:
+					self.display_package(self.allPackages[p].id, UserInterface.parse_time(query))
+					print("")
+			else:
+				self.display_error
+		elif(re.search("^tall", query)):
+			if(re.search("^tall$", query)):
+				for t in self.allTrucks:
+					self.display_truck(self.allTrucks[t].id, None)
+					print("")
+			elif(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
+				for t in self.allTrucks:
+					self.display_truck(self.allTrucks[t].id, UserInterface.parse_time(query))
+					print("")
+			else:
+				self.display_error
 		else:
 			self.display_error()
+		print("")
+		self.prompt_query()
 	
 	def start(self):
 		print("------------------------------------------------------------------------------")
@@ -91,9 +109,8 @@ class UserInterface:
 		print("Please enter one of the following commands...")
 		print("------------------------------------------------------------------------------")
 		self.display_help()
-	
-	def exit(self):
-		return
+		print("")
+		self.prompt_query()
 	
 	#Returns a copy of the provided set
 	def copy_set(set):

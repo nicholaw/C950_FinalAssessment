@@ -70,9 +70,11 @@ class Truck:
 			self.statusTracker[Time.copy_time(self.controller.globalTime)] = (self.totalDist, self.status)
 		return self.status
 	
-	def display_status(self, timeOfReport):
+	def print_status(self, timeOfReport):
+		print("Truck #" + str(self.id))
 		#Status as of right now
 		if(timeOfReport == None):
+			print("Time: EOD")
 			if(self.location == self.controller.hub):
 				print("Status: AT HUB")
 			else:
@@ -83,6 +85,7 @@ class Truck:
 			print("Distance driven: " + str(truncate_to_tenth(self.totalDist)))
 		#Status as of the provided report time
 		else:
+			print("Time: " + str(timeOfReport))
 			closestTime = None
 			for time in self.statusTracker:
 				if(time.is_before(timeOfReport)):

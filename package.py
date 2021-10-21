@@ -19,8 +19,10 @@ class Package:
 		self.group = set()
 	
 	def print_status(self, timeOfReport):
+		print("Package #" + str(self.id))
 		#print the status of this package as of right now
 		if(timeOfReport == None):
+			print("Time: EOD")
 			if(self.timeDelivered != None):
 				print("Status: DELIVERED")
 				print("Time of delivery: " + str(self.timeDelivered))
@@ -33,6 +35,7 @@ class Package:
 				print("Status: AT HUB")
 		#print the status of this package as of the provided time
 		else:
+			print("Time: " + str(timeOfReport))
 			if(timeOfReport.is_before(self.timeLoaded) or self.timeLoaded == None):
 				print("Status: AT HUB")
 			elif(timeOfReport.is_before(self.timeDelivered) or self.timeDelivered == None):
