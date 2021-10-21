@@ -31,6 +31,7 @@ class Truck:
 				self.cargo.append(p)
 				p.timeLoaded = Time.copy_time(self.controller.globalTime)
 				p.truck = self.id
+				print("loaded package #" + str(p.id))
 				return True
 	
 	def deliver(self, package):
@@ -62,7 +63,6 @@ class Truck:
 				else:
 					self.location = self.destination
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
-					print("Delivered " + str(self.currentPackage.id))
 					self.controller.packagesDelivered += 1
 					self.destination = None
 					self.currentPackage = None

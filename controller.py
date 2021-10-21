@@ -54,8 +54,45 @@ class Controller:
 						minDist = dist
 						nextPackage = p
 			if(nextPackage != None):
-				truck.load(nextPackage)
-				allPackages.remove(nextPackage)
+				if(len(nextPackage.group) > 0):
+					self.load_group(truck, nextPackage)
+					print("Finished loading group")
+				else:
+					truck.load(nextPackage)
+					allPackages.remove(nextPackage)
+	
+	def load_group(self, truck, basePackage):
+		fullGroup = {basePackage}
+		packagesToVisit = {basePackage}
+		visitedPackages = dict()
+		#Explore group memebers to find any other group memebers
+		while(len(packagesToVisit) > 0):
+			p = packagesToVisit.pop()
+			visitedPackages[p] = p
+			for g in p.group:
+				g = Controller.get_package(g) #TODO: convert allPackages from set to dict so this operation isn't linear
+				if(g != None):
+					fullGroup.add(g)
+					try:
+						visitedPackages[g]
+					except KeyError:
+						packagesToVisit.add(g)
+		#Make room for the entire group if there isn't enough room
+		while(len(truck.cargo) + len(fullGroup) > MAX_PACKAGES): #Unloading the truck is terrible, but package groups are probably rare enough and small enough this isn't a big issue
+			allPackages.add(truck.cargo.pop())
+		#Sort the group by nearestNeighbor starting with basePackage
+		deliveryOrder = [basePackage]
+		fullGroup.remove(basePackage)
+		while(len(fullGroup) > 1):
+			next = Controller.nearest_neighbor(deliveryOrder[len(deliveryOrder) - 1], fullGroup)
+			deliveryOrder.append(next)
+			fullGroup.remove(next)
+		next = fullGroup.pop()
+		deliveryOrder.append(next)
+		#Load the group of packages onto the truck
+		for p in deliveryOrder:
+			if(truck.load(p)):
+				allPackages.remove(p)
 	
 	def is_valid(self, package, truck):
 		if(not(package.truck == -1 or package.truck == truck.id)):
@@ -64,17 +101,16 @@ class Controller:
 			return False
 		return True
 	
-	def filter_valid_packages(self, truck):
-		validPackages = set()
-		for p in allPackages:
-			valid = True
-			if(not(p.truck == -1 or p.truck == truck.id)):
-				valid = False
-			elif(p.available.is_after(self.globalTime)):
-				valid = False
-			if(valid):
-				validPackages.add(p)
-		return validPackages
+	#Returns the package from the provided collection whose delivery destination is closest to the destination of the provided package
+	def nearest_neighbor(package, collection):
+		nearestNeighbor = None
+		minDist = 999
+		for p in collection:
+			dist = Controller.find_distance(package.dest, p.dest)
+			if(dist < minDist):
+				minDist = dist
+				nearestNeighbor = p
+		return nearestNeighbor
 	
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
@@ -103,9 +139,15 @@ class Controller:
 		for truck in self.fleet:
 			if(len(truck.cargo) > 0):
 				unfinished = True
-			elif(truck.status == "Delivering package"):
+			elif(truck.currentPackage != None):
 				unfinished = True
 		return unfinished
+	
+	def get_package(id):
+		for p in allPackages:
+			if(p.id == id):
+				return p
+		return None
 	
 	def print_stats(self):
 		print("Deliveries: " + str(self.packagesDelivered))
