@@ -17,7 +17,7 @@ class Controller:
 		self.fleet = set()
 		self.populate_fleet(numTrucks)
 		self.packagesDelivered = 0
-		self.ui = UserInterface(allPackages, self.fleet)
+		self.ui = UserInterface(allPackages, self.fleet, self)
 	
 	#Sets the hub location based on the provided location name
 	def set_hub(hubName):
@@ -44,16 +44,37 @@ class Controller:
 			nextPackage = None
 			minDist = 999
 			for p in allPackages:
-				dist = 999
-				if(len(truck.cargo) > 0):
-					dist = Controller.find_distance(truck.cargo[len(truck.cargo) - 1].dest, p.dest)
-				else:
-					dist = Controller.find_distance(self.hub, p.dest)
-				if(dist < minDist):
-					minDist = dist
-					nextPackage = p
-			truck.load(nextPackage)
-			allPackages.remove(nextPackage)
+				if(self.is_valid(p, truck)):
+					dist = 999
+					if(len(truck.cargo) > 0):
+						dist = Controller.find_distance(truck.cargo[len(truck.cargo) - 1].dest, p.dest)
+					else:
+						dist = Controller.find_distance(self.hub, p.dest)
+					if(dist < minDist):
+						minDist = dist
+						nextPackage = p
+			if(nextPackage != None):
+				truck.load(nextPackage)
+				allPackages.remove(nextPackage)
+	
+	def is_valid(self, package, truck):
+		if(not(package.truck == -1 or package.truck == truck.id)):
+			return False
+		if(package.available.is_after(self.globalTime)):
+			return False
+		return True
+	
+	def filter_valid_packages(self, truck):
+		validPackages = set()
+		for p in allPackages:
+			valid = True
+			if(not(p.truck == -1 or p.truck == truck.id)):
+				valid = False
+			elif(p.available.is_after(self.globalTime)):
+				valid = False
+			if(valid):
+				validPackages.add(p)
+		return validPackages
 	
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
@@ -92,7 +113,8 @@ class Controller:
 		print("Distance(mi):")
 		total = 0
 		for truck in self.fleet:
-			num = Controller.truncate_to_tenth(truck.totalDist)
+			num = truncate_to_tenth(truck.totalDist)
 			total += num
 			print("   " + str(num))
 		print("Total Distance: " + str(total))
+		print("Length allPackages " + str(len(allPackages)))

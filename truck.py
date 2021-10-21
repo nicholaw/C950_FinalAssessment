@@ -62,6 +62,7 @@ class Truck:
 				else:
 					self.location = self.destination
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
+					print("Delivered " + str(self.currentPackage.id))
 					self.controller.packagesDelivered += 1
 					self.destination = None
 					self.currentPackage = None

@@ -9,9 +9,10 @@ from truck import Truck
 import re
 
 class UserInterface:
-	def __init__(self, packages, trucks):
+	def __init__(self, packages, trucks, controller):
 		self.allPackages = UserInterface.copy_set(packages)
 		self.allTrucks = UserInterface.copy_set(trucks)
+		self.controller = controller
 	
 	def prompt_query(self):
 		query = input(">>")
@@ -32,7 +33,7 @@ class UserInterface:
 		print("NOTE: times must be entered in 24-hour format and include a leading '0' for times before 10:00")
 	
 	def display_full_report(self):
-		print("TODO")
+		self.controller.print_stats()
 	
 	def display_error(self):
 		print("Command not recognized.")
