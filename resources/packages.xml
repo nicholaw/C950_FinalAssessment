@@ -1,0 +1,557 @@
+<root>
+	<package id="1">
+		<destination>
+			<street>195 W Oakland Ave</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="21" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="2">
+		<destination>
+			<street>2530 S 500 E</street>
+			<city>Salt Lake City</city>
+			<zip>84106</zip>
+		</destination>
+		<weight weight="44" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="3">
+		<destination>
+			<street>233 Canyon Rd</street>
+			<city>Salt Lake City</city>
+			<zip>84103</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="2" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note>Can only be on truck 2</note>
+	</package>
+	
+	<package id="4">
+		<destination>
+			<street>380 W 2880 S</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="4" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="5">
+		<destination>
+			<street>410 S State St</street>
+			<city>Salt Lake City</city>
+			<zip>84111</zip>
+		</destination>
+		<weight weight="5" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="6">
+		<destination>
+			<street>3060 Lester St</street>
+			<city>West Valley City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="88" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>09:05</available>
+		<group></group>
+		<note>Delayed on flight---will not arrive to depot until 09:05</note>
+		
+	</package>
+	<package id="7">
+		<destination>
+			<street>1330 2100 S</street>
+			<city>Salt Lake City</city>
+			<zip>84106</zip>
+		</destination>
+		<weight weight="8" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="8">
+		<destination>
+			<street>300 State Street</street>
+			<city>Salt Lake City</city>
+			<zip>84103</zip>
+		</destination>
+		<weight weight="9" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="9">
+		<destination>
+			<street>300 State Street</street>
+			<city>Salt Lake City</city>
+			<zip>84103</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note>Wrong address listed</note>
+	</package>
+	
+	<package id="10">
+		<destination>
+			<street>600 E 900 S</street>
+			<city>Salt Lake City</city>
+			<zip>84105</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="11">
+		<destination>
+			<street>2600 Taylorsville Blvd</street>
+			<city>Salt Lake City</city>
+			<zip>84118</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="12">
+		<destination>
+			<street>3575 W Valley Central Station</street>
+			<city>West Valley City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="13">
+		<destination>
+			<street>2010 W 500 S</street>
+			<city>Salt Lake City</city>
+			<zip>84104</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="14">
+		<destination>
+			<street>4300 S 1300 E</street>
+			<city>Millcreek</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="88" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group>15,19</group>
+		<note>Must be delivered with 15, 19</note>
+		
+	</package>
+	<package id="15">
+		<destination>
+			<street>4580 S 2300 E</street>
+			<city>Holladay</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="4" />
+		<truck truck="0" />
+		<deadline>09:00</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="16">
+		<destination>
+			<street>4580 S 2300 E</street>
+			<city>Holladay</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="88" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group>13,19</group>
+		<note>Must be delivered with 13, 19</note>
+	</package>
+	
+	<package id="17">
+		<destination>
+			<street>3148 S 1100 W</street>
+			<city>Salt Lake City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="18">
+		<destination>
+			<street>1488 4800 S</street>
+			<city>Salt Lake City</city>
+			<zip>84123</zip>
+		</destination>
+		<weight weight="6" />
+		<truck truck="2" />
+		<group></group>
+		<note>Can only be on truck 2</note>
+	</package>
+	
+	<package id="19">
+		<destination>
+			<street>177 W Price Ave</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="37" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="20">
+		<destination>
+			<street>3595 Main St</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="37" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group>13,15</group>
+		<note>Must be delivered with 13, 15</note>
+	</package>
+	
+	<package id="21">
+		<destination>
+			<street>3595 Main St</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="3" />
+		<truck truck="0" />
+		<group></group>
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<note></note>
+	</package>
+	
+	<package id="22">
+		<destination>
+			<street>6351 South 900 East</street>
+			<city>Murray</city>
+			<zip>84121</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="23">
+		<destination>
+			<street>5100 South 2700 West</street>
+			<city>Salt Lake City</city>
+			<zip>84118</zip>
+		</destination>
+		<weight weight="5" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="24">
+		<destination>
+			<street>5025 State St</street>
+			<city>Murray</city>
+			<zip>84107</zip>
+		</destination>
+		<weight weight="7" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="25">
+		<destination>
+			<street>5383 South 900 East #104</street>
+			<city>Salt Lake City</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="7" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>09:05</available>
+		<group></group>
+		<note>Delayed on flight---will not arrive to depot until 09:05</note>
+	</package>
+	
+	<package id="26">
+		<destination>
+			<street>5383 South 900 East #104</street>
+			<city>Salt Lake City</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="25" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="27">
+		<destination>
+			<street>1060 Dalton Ave S</street>
+			<city>Salt Lake City</city>
+			<zip>84104</zip>
+		</destination>
+		<weight weight="5" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="28">
+		<destination>
+			<street>2835 Main St</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="7" />
+		<truck truck="0" />
+		<group></group>
+		<deadline>eod</deadline>
+		<available>09:05</available>
+		<note>Delayed on flight---will not arrive to depot until 09:05</note>
+	</package>
+	
+	<package id="29">
+		<destination>
+			<street>1330 2100 S</street>
+			<city>Salt Lake City</city>
+			<zip>84106</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="30">
+		<destination>
+			<street>300 State Street</street>
+			<city>Salt Lake City</city>
+			<zip>84103</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="31">
+		<destination>
+			<street>3365 S 900 W</street>
+			<city>Salt Lake City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="32">
+		<destination>
+			<street>3365 S 900 W</street>
+			<city>Salt Lake City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>09:05</available>
+		<group></group>
+		<note>Delayed on flight---will not arrive to depot until 09:05</note>
+	</package>
+	
+	<package id="33">
+		<destination>
+			<street>2530 S 500 E</street>
+			<city>Salt Lake City</city>
+			<zip>84106</zip>
+		</destination>
+		<weight weight="1" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="34">
+		<destination>
+			<street>4580 S 2300 E</street>
+			<city>Holladay</city>
+			<zip>84117</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="35">
+		<destination>
+			<street>1060 Dalton Ave S</street>
+			<city>Salt Lake City</city>
+			<zip>84104</zip>
+		</destination>
+		<weight weight="88" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="36">
+		<destination>
+			<street>2300 Parkway Blvd</street>
+			<city>West Valley City</city>
+			<zip>84119</zip>
+		</destination>
+		<weight weight="88" />
+		<truck truck="2" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note>Can only be on truck 2</note>
+	</package>
+	
+	<package id="37">
+		<destination>
+			<street>410 S State St</street>
+			<city>Salt Lake City</city>
+			<zip>84111</zip>
+		</destination>
+		<weight weight="2" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="38">
+		<destination>
+			<street>410 S State St</street>
+			<city>Salt Lake City</city>
+			<zip>84111</zip>
+		</destination>
+		<weight weight="9" />
+		<truck truck="2" />
+		<group></group>
+		<note>Can only be on truck 2</note>
+	</package>
+	
+	<package id="39">
+		<destination>
+			<street>2010 W 500 S</street>
+			<city>Salt Lake City</city>
+			<zip>84104</zip>
+		</destination>
+		<weight weight="9" />
+		<truck truck="0" />
+		<deadline>eod</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+	
+	<package id="40">
+		<destination>
+			<street>380 W 2880 S</street>
+			<city>Salt Lake City</city>
+			<zip>84115</zip>
+		</destination>
+		<weight weight="45" />
+		<truck truck="0" />
+		<deadline>10:30</deadline>
+		<available>sod</available>
+		<group></group>
+		<note></note>
+	</package>
+</root>
