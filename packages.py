@@ -4,12 +4,15 @@ Instantiates the set of all packages to be delivered by the C950 final assessmen
 from address import Address
 from timeofday import Time
 from package import Package
+from packagegroup import PackageGroup
 import xml.etree.ElementTree as ET
 
 #Create element tree from xml file and instantiate set for storing packages
 tree = ET.parse("resources/packages.xml")
 root = tree.getroot()
-allPackages = set()
+allPackages = dict()
+hasGroup = set()
+allGroups = set()
 
 #Populate set of all locations from element tree
 #TODO: can we maybe not have three nested for loops, please
@@ -44,10 +47,9 @@ for item in root.findall(".//package"):
 				p.available = Time.of(child.text)
 		elif(child.tag == "note"):
 			p.note = child.text
-		"""
 		elif(child.tag == "group"):
-			try:
-				text = child.text
+			text = child.text
+			if(text != None):
 				i = 0
 				num = ""
 				while(i < len(text)):
@@ -56,10 +58,20 @@ for item in root.findall(".//package"):
 						num = ""
 					else:
 						num += text[i]
+					i += 1
 				p.group.add(int(num))
-			except TypeError:
-				continue
-		"""
-	allPackages.add(p)
+				hasGroup.add(p)
+	allPackages[p.id] = p
 
 #Assemble any package groups
+for p in hasGroup:
+	newGroup = PackageGroup()
+	newGroup.insert(p)
+	for id in p.group:
+		newGroup.insert(allPackages[id])
+	allGroups.add(newGroup)
+	
+#Merge any groups whose intersection is not the empty set
+finalGroups  = PackageGroup()
+for g in allGroups:
+	finalGroups.insert_group(g)

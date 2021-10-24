@@ -8,10 +8,12 @@ from controller import Controller
 controller = Controller(2, Time.of("08:00"), "Western Governors University")
 controller.start()
 """
-from packages import allPackages
+from packages import allPackages, finalGroups
 from locations import allLocations
-for p in allPackages:
-	try:
-		allLocations[p.dest]
-	except KeyError:
+count = 1
+for group in finalGroups.group:
+	print("Group #" + str(count))
+	count += 1
+	for p in group.group:
 		print(str(p))
+	print("--------------------------------------------------")
