@@ -42,15 +42,13 @@ class UserInterface:
 	
 	def display_package(self, id, time):
 		try:
-			p = self.allPackages[id]
-			p.print_status(time)
+			self.allPackages[id].print_status(time)
 		except KeyError:
 			print("No match found for package id #" + str(id))
 	
 	def display_truck(self, id, time):
 		try:
-			t = self.allTrucks[id]
-			t.print_status(time)
+			self.allTrucks[id].print_status(time)
 		except KeyError:
 			print("No match found for truck id #" + str(id))
 	
@@ -79,21 +77,21 @@ class UserInterface:
 				self.display_error()
 		elif(re.search("^pall", query)):
 			if(re.search("^pall$", query)):
-				for p in self.allPackages:
-					self.display_package(self.allPackages[p].id, None)
+				for pid in self.allPackages:
+					self.display_package(pid, None)
 					print("")
-			elif(re.search("p[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
-				for p in self.allPackages:
-					self.display_package(self.allPackages[p].id, UserInterface.parse_time(query))
+			elif(re.search("pall [0-9]{2}:[0-9]{2}$", query)):
+				for pid in self.allPackages:
+					self.display_package(pid, UserInterface.parse_time(query))
 					print("")
 			else:
 				self.display_error
 		elif(re.search("^tall", query)):
 			if(re.search("^tall$", query)):
-				for t in self.allTrucks:
-					self.display_truck(self.allTrucks[t].id, None)
+				for tid in self.allTrucks:
+					self.display_truck(tid, None)
 					print("")
-			elif(re.search("t[0-9]+ [0-9]{2}:[0-9]{2}$", query)):
+			elif(re.search("tall [0-9]{2}:[0-9]{2}$", query)):
 				for t in self.allTrucks:
 					self.display_truck(self.allTrucks[t].id, UserInterface.parse_time(query))
 					print("")
@@ -116,11 +114,18 @@ class UserInterface:
 	#Returns a copy of the provided set
 	def copy_set(set):
 		newSet = dict()
-		for item in set:
-			try:
-				newSet[item.id] = item
-			except AttributeError:
-				print("Unable to copy " + str(item) + " into UI dictionary")
+		if(type(set) == type(newSet)):
+			for item in set:
+				try:
+					newSet[item] = set[item]
+				except AttributeError:
+					print("Unable to copy " + str(item) + " into UI dictionary")
+		else:
+			for item in set:
+				try:
+					newSet[item.id] = item
+				except AttributeError:
+					print("Unable to copy " + str(item) + " into UI dictionary")
 		return newSet
 	
 	#Returns a time from the provided string assuming the last five characters of the string represent the time

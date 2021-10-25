@@ -4,7 +4,7 @@ Class which controls interactions among other classes
 
 from timeofday import Time
 from locations import allLocations
-from packages import allPackages
+from packages import allPackages, finalGroups
 from truck import Truck
 from constants import MAX_PACKAGES, truncate_to_tenth
 from ui import UserInterface
@@ -43,7 +43,8 @@ class Controller:
 		while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
 			nextPackage = None
 			minDist = 999
-			for p in allPackages:
+			for pid in allPackages:
+				p = allPackages[pid]
 				if(self.is_valid(p, truck)):
 					dist = 999
 					if(len(truck.cargo) > 0):
@@ -54,63 +55,15 @@ class Controller:
 						minDist = dist
 						nextPackage = p
 			if(nextPackage != None):
-				if(len(nextPackage.group) > 0):
-					self.load_group(truck, nextPackage)
-					print("Finished loading group")
-				else:
-					truck.load(nextPackage)
-					allPackages.remove(nextPackage)
-	
-	def load_group(self, truck, basePackage):
-		fullGroup = {basePackage}
-		packagesToVisit = {basePackage}
-		visitedPackages = dict()
-		#Explore group memebers to find any other group memebers
-		while(len(packagesToVisit) > 0):
-			p = packagesToVisit.pop()
-			visitedPackages[p] = p
-			for g in p.group:
-				g = Controller.get_package(g) #TODO: convert allPackages from set to dict so this operation isn't linear
-				if(g != None):
-					fullGroup.add(g)
-					try:
-						visitedPackages[g]
-					except KeyError:
-						packagesToVisit.add(g)
-		#Make room for the entire group if there isn't enough room
-		while(len(truck.cargo) + len(fullGroup) > MAX_PACKAGES): #Unloading the truck is terrible, but package groups are probably rare enough and small enough this isn't a big issue
-			allPackages.add(truck.cargo.pop())
-		#Sort the group by nearestNeighbor starting with basePackage
-		deliveryOrder = [basePackage]
-		fullGroup.remove(basePackage)
-		while(len(fullGroup) > 1):
-			next = Controller.nearest_neighbor(deliveryOrder[len(deliveryOrder) - 1], fullGroup)
-			deliveryOrder.append(next)
-			fullGroup.remove(next)
-		next = fullGroup.pop()
-		deliveryOrder.append(next)
-		#Load the group of packages onto the truck
-		for p in deliveryOrder:
-			if(truck.load(p)):
-				allPackages.remove(p)
+				truck.load(nextPackage)
+				allPackages.pop(nextPackage.id)
 	
 	def is_valid(self, package, truck):
-		if(not(package.truck == -1 or package.truck == truck.id)):
+		if(not(package.truck == 0 or package.truck == truck.id)):
 			return False
 		if(package.available.is_after(self.globalTime)):
 			return False
 		return True
-	
-	#Returns the package from the provided collection whose delivery destination is closest to the destination of the provided package
-	def nearest_neighbor(package, collection):
-		nearestNeighbor = None
-		minDist = 999
-		for p in collection:
-			dist = Controller.find_distance(package.dest, p.dest)
-			if(dist < minDist):
-				minDist = dist
-				nearestNeighbor = p
-		return nearestNeighbor
 	
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
@@ -144,10 +97,10 @@ class Controller:
 		return unfinished
 	
 	def get_package(id):
-		for p in allPackages:
-			if(p.id == id):
-				return p
-		return None
+		try:
+			return allPackages[id]
+		except KeyError:
+			return None
 	
 	def print_stats(self):
 		print("Deliveries: " + str(self.packagesDelivered))
