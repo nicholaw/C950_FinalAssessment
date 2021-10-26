@@ -44,19 +44,15 @@ class Controller:
     def load_truck(self, truck):
         available = True
         while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0) and available):
-            nextPackage = None
-            minDist = 999
-            for pid in allPackages:
-                p = allPackages[pid]
-                if(self.is_valid(p, truck)):
-                    dist = 999
-                    if(len(truck.cargo) > 0):
-                        dist = Controller.find_distance(truck.cargo[len(truck.cargo) - 1].dest, p.dest)
-                    else:
-                        dist = Controller.find_distance(self.hub, p.dest)
-                    if(dist < minDist):
-                        minDist = dist
-                        nextPackage = p
+            try:
+                location = truck.last_package().dest
+            except AttributeError:
+                location = self.hub
+            if(len(self.priorityPackages) > 0):
+                nextPackage = Controller.nearest_neighbor(location, self.priorityPackages, truck.id, self.globalTime)
+            else:
+                nextPackage = Controller.nearest_neighbor(location, allPackages, truck.id, self.gloalTime)
+                
             if(nextPackage != None):
                 groupPresent = False
                 for group in finalGroups.group:
@@ -98,20 +94,21 @@ class Controller:
         return loadOrder
     
     #finds the nearest neighbor to the provided location within the provided collection
-    def nearest_neighbor(location, collection):
+    def nearest_neighbor(location, collection, truckId, time):
         next = None
         minDist = 999
         for item in collection:
-            dist = Controller.find_distance(location, item.dest)
-            if(dist < minDist):
-                minDist = dist
-                next = item
+            if(Controller.is_valid(item, truckId, time)):
+                dist = Controller.find_distance(location, item.dest)
+                if(dist < minDist):
+                    minDist = dist
+                    next = item
         return next
     
-    def is_valid(self, package, truck):
-        if(not(package.truck == 0 or package.truck == truck.id)):
+    def is_valid(package, truckId, time):
+        if(not(package.truck == 0 or package.truck == truckId)):
             return False
-        if(package.available.is_after(self.globalTime)):
+        if(package.available.is_after(time)):
             return False
         return True
     

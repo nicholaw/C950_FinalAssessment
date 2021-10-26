@@ -113,6 +113,12 @@ class Truck:
             self.status = "RETURNING TO HUB"
             self.return_to_hub()
     
+    def last_package(self):
+        if(len(self.cargo) > 0):
+            return self.cargo[len(self.cargo) - 1]
+        else:
+            return None
+    
     def __hash__(self):
         return self.id % 1024
     
