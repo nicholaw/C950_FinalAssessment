@@ -56,6 +56,7 @@ class Truck:
             if(self.eta == self.controller.globalTime or self.eta.is_before(self.controller.globalTime)):
                 if(self.status == "RETURNING TO HUB"):
                     self.status = "AT HUB"
+                    print("Truck #" + str(self.id) + " arrived back at hub " + str(self.controller.globalTime) + "\n")
                     self.location = self.destination
                     self.eta = None
                     self.destination = None

@@ -4,7 +4,7 @@ Class which controls interactions among other classes
 
 from timeofday import Time
 from locations import allLocations
-from packages import allPackages, finalGroups
+from packages import allPackages, finalGroups, deadlineBuckets
 from truck import Truck
 from constants import MAX_PACKAGES, truncate_to_tenth
 from ui import UserInterface
@@ -18,6 +18,8 @@ class Controller:
         self.populate_fleet(numTrucks)
         self.packagesDelivered = 0
         self.ui = UserInterface(allPackages, self.fleet, self)
+        self.priorityPackages = None
+        self.set_priority_packages()
     
     #Sets the hub location based on the provided location name
     def set_hub(hubName):
@@ -40,7 +42,8 @@ class Controller:
     #If the truck is less than half full, loads a package which is farther from the hub than the last package loaded;
     #If the truck is more than half full, loads a package which is closer to the hub than the last package
     def load_truck(self, truck):
-        while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0)):
+        available = True
+        while((len(truck.cargo) < MAX_PACKAGES) and (len(allPackages) > 0) and available):
             nextPackage = None
             minDist = 999
             for pid in allPackages:
@@ -63,6 +66,8 @@ class Controller:
                 if(not groupPresent):
                     truck.load(nextPackage)
                     allPackages.pop(nextPackage.id)
+            else:
+                available = False
     
     def load_group(self, group, package, truck):
         #sort the group by nearest neighbor starting with provided package
@@ -92,6 +97,17 @@ class Controller:
         loadOrder.append(group.pop_last())
         return loadOrder
     
+    #finds the nearest neighbor to the provided location within the provided collection
+    def nearest_neighbor(location, collection):
+        next = None
+        minDist = 999
+        for item in collection:
+            dist = Controller.find_distance(location, item.dest)
+            if(dist < minDist):
+                minDist = dist
+                next = item
+        return next
+    
     def is_valid(self, package, truck):
         if(not(package.truck == 0 or package.truck == truck.id)):
             return False
@@ -101,6 +117,12 @@ class Controller:
     
     def find_distance(locationA, locationB):
         return allLocations[locationA].distances[locationB]
+    
+    def set_priority_packages(self):
+        try:
+            self.priorityPackages = deadlineBuckets[self.globalTime]
+        except KeyError:
+            return
     
     def start(self):
         while(len(allPackages) > 0):
@@ -112,6 +134,7 @@ class Controller:
                 else:
                     truck.check_status()
             self.globalTime.step()
+            self.check_priority_packages()
         self.finish()
     
     def finish(self):
@@ -145,5 +168,4 @@ class Controller:
             num = truncate_to_tenth(truck.totalDist)
             total += num
             print("   " + str(num))
-        print("Total Distance: " + str(total))
-        print("Length allPackages " + str(len(allPackages)))
+        print("Total Distance: " + str(truncate_to_tenth(total)))

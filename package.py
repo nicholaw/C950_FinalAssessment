@@ -10,7 +10,7 @@ class Package:
 		self.id = id
 		self.dest = None
 		self.available = Time.of("08:00")
-		self.deadline = Time.of("23:59")
+		self.deadline = None
 		self.timeLoaded = None
 		self.timeDelivered = None
 		self.mass = 1
