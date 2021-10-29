@@ -2,6 +2,9 @@
 Constants and shared methods for use in the application
 """
 
+from timeofday import Time
+
+SOD = Time.of("08:00")
 MAX_PACKAGES = 16
 AVG_SPEED_MPH = 18
 AVG_SPEED_MPM = AVG_SPEED_MPH / 60

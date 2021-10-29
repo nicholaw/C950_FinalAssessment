@@ -6,7 +6,7 @@ from timeofday import Time
 from locations import allLocations
 from packages import allPackages, finalGroups
 from truck import Truck
-from constants import MAX_PACKAGES, truncate_to_tenth, reverse_array
+from constants import SOD, MAX_PACKAGES, truncate_to_tenth, reverse_array
 from ui import UserInterface
 
 class Controller:
@@ -15,7 +15,7 @@ class Controller:
 		self.globalTime = startTime
 		self.hub = Controller.set_hub(hubName)
 		self.fleet = set()
-		self.populate_fleet(numTrucks)
+		self.populate_fleet(numTrucks, self.check_for_delayed_packages())
 		self.packagesDelivered = 0
 		self.ui = UserInterface(allPackages, self.fleet, self)
 	
@@ -27,14 +27,32 @@ class Controller:
 		return None
 	
 	#Instantiates the provided number of delivery trucks
-	def populate_fleet(self, numTrucks):
+	def populate_fleet(self, numTrucks, delay):
 		if(numTrucks <= 0):
 			self.fleet.add(Truck(1, self.hub, self))
 		else:
 			i = 1
 			while(len(self.fleet) < numTrucks):
-				self.fleet.add(Truck(i, self.hub, self))
+				t = Truck(i, self.hub, self)
+				if(delay != None):
+					if(t.id == 2):
+						t.start = Time.copy_time(delay)
+				self.fleet.add(t)
 				i += 1
+	
+	#Checks for any packages delayed on flight
+	def check_for_delayed_packages(self):
+		minDelay = Time.copy_time(SOD)
+		minDelay.add_minutes(120)
+		longestDelay = None
+		for id in allPackages:
+			delay = allPackages[id].available
+			if(delay.is_after(SOD) and delay.is_before(minDelay)):
+				if(longestDelay == None):
+					longestDelay = Time.copy_time(delay)
+				elif(delay.is_after(longestDelay)):
+					longestDelay = Time.copy_time(delay)
+		return longestDelay
 	
 	#Chooses the next package to be loaded onto the provided truck and loads the package
 	def load_truck(self, truck):
@@ -91,7 +109,7 @@ class Controller:
 		for item in collection:
 			if(item.deadline != None):
 				time = Time.copy_time(self.globalTime)
-				time.add_minutes(150)
+				time.add_minutes(120)
 				if(item.deadline.is_before(time) or item.deadline == time):
 					priority.add(item)
 		return priority
@@ -132,14 +150,15 @@ class Controller:
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
 	
-	
+	#Starts the algorithm
 	def start(self):
 		while(len(allPackages) > 0):
 			for truck in self.fleet:
 				if(truck.location == self.hub):
 					if(len(allPackages) > 0):
-						self.load_truck(truck)
-						truck.make_deliveries()
+						if(not self.globalTime.is_before(truck.start)):
+							self.load_truck(truck)
+							truck.make_deliveries()
 				else:
 					truck.check_status()
 			self.globalTime.step()

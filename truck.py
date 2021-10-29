@@ -6,7 +6,7 @@ from packages import Package
 from timeofday import Time
 from address import Address
 from locations import allLocations
-from constants import MAX_PACKAGES, AVG_SPEED_MPM, truncate_to_tenth
+from constants import SOD, MAX_PACKAGES, AVG_SPEED_MPM, truncate_to_tenth
 import math
 
 class Truck:
@@ -22,6 +22,7 @@ class Truck:
 		self.statusTracker = dict()
 		self.destination = None
 		self.eta = None
+		self.start = Time.copy_time(SOD)
 
 	#Loads the provided package onto this truck
 	def load(self, p):
@@ -66,11 +67,6 @@ class Truck:
 				else:
 					self.location = self.destination
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
-					#-------------------------------------------------------------------------------------------------------------------------------------#
-					if(self.currentPackage.deadline != None):
-						if(self.currentPackage.deadline.is_before(self.controller.globalTime)):
-							print("Truck #" + str(self.id) + " delivered Package #" + str(self.currentPackage.id) + " at " + str(self.controller.globalTime) + " (LATE)")
-					#-------------------------------------------------------------------------------------------------------------------------------------#
 					self.controller.packagesDelivered += 1
 					self.destination = None
 					self.currentPackage = None
