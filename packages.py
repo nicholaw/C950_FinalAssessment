@@ -1,6 +1,7 @@
 """
 Instantiates the set of all packages to be delivered by the C950 final assessment algorithm
 """
+
 from address import Address
 from timeofday import Time
 from package import Package
@@ -14,8 +15,8 @@ root = tree.getroot()
 #Initialize data structures for storing and organizing packages
 allPackages = dict()          				#all packages to be delivered today
 hasGroup = set()              				#all packages which must be delivered with other specified packages
-allGroups = set()             					#all distinct groups of packages
-finalGroups = PackageGroup()  	#after groups merged to avoid intersections among groups
+allGroups = set()             				#all distinct groups of packages
+finalGroups = PackageGroup()  	#all distinct groups after groups have been merged to avoid intersections among groups
 
 #Populate set of all locations from element tree
 #TODO: can we maybe not have three nested for loops, please
@@ -78,11 +79,3 @@ for p in hasGroup:
 finalGroups  = PackageGroup()
 for g in allGroups:
     finalGroups.insert_group(g)
-
-g = 1
-for group in finalGroups.group:
-	print("Group #" + str(g))
-	g += 1
-	for p in group.group:
-		print("Package #" + str(p.id))
-	print("\n----------------------------------------------------")

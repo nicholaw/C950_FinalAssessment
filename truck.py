@@ -9,8 +9,8 @@ from locations import allLocations
 from constants import MAX_PACKAGES, AVG_SPEED_MPM, truncate_to_tenth
 import math
 
-#Define the Truck class
 class Truck:
+	#Constructs this object
 	def __init__(self, id, startingLocation, controller):
 		self.id = id
 		self.totalDist = 0
@@ -23,6 +23,7 @@ class Truck:
 		self.destination = None
 		self.eta = None
 
+	#Loads the provided package onto this truck
 	def load(self, p):
 		if(p != None):
 			if(len(self.cargo) >= MAX_PACKAGES):
@@ -33,6 +34,7 @@ class Truck:
 				p.truck = self.id
 				return True
 	
+	#Delivers the provided package
 	def deliver(self, package):
 		self.currentPackage = package
 		self.status = "MAKING DELIVERIES"
@@ -43,6 +45,7 @@ class Truck:
 		self.eta.add_minutes(int(math.ceil(distToDest * (1 / AVG_SPEED_MPM))))
 		self.location = None
 	
+	#Moves this truck to the hub from its current location
 	def return_to_hub(self):
 		self.destination = self.controller.hub
 		distToDest = self.location.distances[self.destination]
@@ -51,14 +54,12 @@ class Truck:
 		self.eta.add_minutes(int(math.ceil(distToDest * (1 / AVG_SPEED_MPM))))
 		self.location = None
 	
+	#Checks the status of this truck and performs any status changes based on the time and its position
 	def check_status(self):
 		if(type(self.eta) != type(None)):
 			if(self.eta == self.controller.globalTime or self.eta.is_before(self.controller.globalTime)):
 				if(self.status == "RETURNING TO HUB"):
 					self.status = "AT HUB"
-					if(self.id == 1):
-						print("Back at Hub (" + str(self.controller.globalTime) + ")")
-						print("---------------------------------------------------------")
 					self.location = self.destination
 					self.eta = None
 					self.destination = None
@@ -66,14 +67,9 @@ class Truck:
 					self.location = self.destination
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
 					#-------------------------------------------------------------------------------------------------------------------------------------#
-					if(self.id == 1):
-						if(self.currentPackage.deadline == None):
-							print("Truck #" + str(self.id) + " delivered Package #" + str(self.currentPackage.id) + " at " + str(self.controller.globalTime))
-						else:
-							if(self.currentPackage.deadline.is_before(self.controller.globalTime)):
-								print("Truck #" + str(self.id) + " delivered Package #" + str(self.currentPackage.id) + " at " + str(self.controller.globalTime) + " (LATE)")
-							else:
-								print("Truck #" + str(self.id) + " delivered Package #" + str(self.currentPackage.id) + " at " + str(self.controller.globalTime))
+					if(self.currentPackage.deadline != None):
+						if(self.currentPackage.deadline.is_before(self.controller.globalTime)):
+							print("Truck #" + str(self.id) + " delivered Package #" + str(self.currentPackage.id) + " at " + str(self.controller.globalTime) + " (LATE)")
 					#-------------------------------------------------------------------------------------------------------------------------------------#
 					self.controller.packagesDelivered += 1
 					self.destination = None
@@ -83,6 +79,7 @@ class Truck:
 			self.statusTracker[Time.copy_time(self.controller.globalTime)] = (self.totalDist, self.status)
 		return self.status
 	
+	#Prints the status of this truck as of the provided time; if no time is provided, prints this trucks current status
 	def print_status(self, timeOfReport):
 		print("Truck #" + str(self.id))
 		#Status as of right now
@@ -114,6 +111,7 @@ class Truck:
 				print("Status: AT HUB")
 				print("Distance driven: 0.0")
 	
+	#Deliver all packages loaded on this truck in the order they are loaded
 	def make_deliveries(self):
 		if(len(self.cargo) > 0):
 			self.status = "MAKING DELIVERIES"
@@ -122,15 +120,18 @@ class Truck:
 			self.status = "RETURNING TO HUB"
 			self.return_to_hub()
 	
+	#Returns the last package loaded onto this truck
 	def last_package(self):
 		if(len(self.cargo) > 0):
 			return self.cargo[len(self.cargo) - 1]
 		else:
 			return None
 	
+	#Returns the hash value of this object
 	def __hash__(self):
 		return self.id % 1024
 	
+	#Returns a string representation of this object
 	def __str__(self):
 		string = "Truck #" + str(self.id) 
 		return string

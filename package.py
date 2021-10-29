@@ -6,6 +6,7 @@ from address import Address
 from timeofday import Time
 
 class Package:
+	#Constructs this Package object
 	def __init__(self, id):
 		self.id = id
 		self.dest = None
@@ -18,6 +19,8 @@ class Package:
 		self.truck = -1
 		self.group = set()
 	
+	#Prints the status of this object as of the provided time; if no time is provided,
+	#prints the current status of this object
 	def print_status(self, timeOfReport):
 		print("Package #" + str(self.id))
 		#print the status of this package as of right now
@@ -46,15 +49,18 @@ class Package:
 				print("Status: DELIVERED")
 				print("Time of delivery: " + str(self.timeDelivered))
 				print("Delivered by truck #" + str(self.truck))
-
+	
+	#Returns a string representation of this object
 	def __str__(self):
 		string = "Package #" + str(self.id) + "\n"
 		string += (str(self.dest) + "\n")
 		return string
 
+	#Returns the hash value of this object
 	def __hash__(self):
 		return ((self.id * 5867) % 128)
 
+	#Returns true if the provided object is equal to this object and false otherwise
 	def __eq__(self, other):
 		if(type(self) != type(other)):
 			return False

@@ -40,23 +40,38 @@ class Controller:
 	def load_truck(self, truck):
 		eligiblePackages = self.eligible_packages(truck)
 		priorityPackages = self.check_for_prioity_packages(eligiblePackages)
+		orig = len(priorityPackages)
+		groupPackages = set()
+		#Continue loading truck until it's full or there are no more eligiblePackages
 		while(len(truck.cargo) < MAX_PACKAGES and len(eligiblePackages) > 0):
+			#Truck is not empty
 			if(len(truck.cargo) > 0):
-				if(len(priorityPackages) > 0):
+				if(len(groupPackages) > 0):
+					nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, groupPackages)
+					groupPackages.remove(nextPackage)
+				elif(len(priorityPackages) > int(orig - orig * (truck.id / len(self.fleet)))):
 					nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, priorityPackages)
 					priorityPackages.remove(nextPackage)
 				else:
 					nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, eligiblePackages)
+			#Truck is empty
 			else:
-				if(len(priorityPackages) > 0):
+				if(len(priorityPackages) > int(orig - orig * (truck.id / len(self.fleet)))):
 					nextPackage = Controller.nearest_neighbor(self.hub, priorityPackages)
 					priorityPackages.remove(nextPackage)
 				else:
 					nextPackage = Controller.nearest_neighbor(self.hub, eligiblePackages)
 			group = self.is_part_of_group(nextPackage)
+			#Check if the package to load is part of a group
 			if(group != None):
-				Controller.add_packages(group.group, priorityPackages, nextPackage)
+				Controller.add_packages(group.group, groupPackages, nextPackage)
+				for p in groupPackages:
+					try: 
+						priorityPackages.remove(p)
+					except KeyError:
+						continue
 				finalGroups.remove_group(group)
+			#Load next package and remove from relevant sets
 			eligiblePackages.remove(nextPackage)
 			truck.load(allPackages.pop(nextPackage.id))
 		truck.cargo = reverse_array(truck.cargo)

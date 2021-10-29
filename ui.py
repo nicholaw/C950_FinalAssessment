@@ -9,15 +9,18 @@ from truck import Truck
 import re
 
 class UserInterface:
+	#Constructs this object
 	def __init__(self, packages, trucks, controller):
 		self.allPackages = UserInterface.copy_set(packages)
 		self.allTrucks = UserInterface.copy_set(trucks)
 		self.controller = controller
 	
+	#Promts the user to enter a query
 	def prompt_query(self):
 		query = input(">>")
 		self.parse_query(query)
 	
+	#Prints a list of valid commands the user may enter into the interface
 	def display_help(self):
 		print("p[id] [HH:mm]\tDisplay info for the package with the specified package id at the provided time.")
 		print("\t\t   If time is omitted, displays info at EOD.")
@@ -32,26 +35,31 @@ class UserInterface:
 		print("exit\t\tTerminate the application.")
 		print("NOTE: times must be entered in 24-hour format and include a leading '0' for times before 10:00")
 	
+	#Prints general information about the days deliveries such as the total number of packaes delivered and the total milage driven
 	def display_full_report(self):
 		self.controller.print_stats()
 	
+	#Prints an error message and a list of valid commands
 	def display_error(self):
 		print("Command not recognized.")
 		print("List of valid commands:")
 		self.display_help()
 	
+	#Prints infromation for the provided package at the provided time if the package exists
 	def display_package(self, id, time):
 		try:
 			self.allPackages[id].print_status(time)
 		except KeyError:
 			print("No match found for package id #" + str(id))
 	
+	#Prints infromation for the provided truck at the provided time if the truck exists
 	def display_truck(self, id, time):
 		try:
 			self.allTrucks[id].print_status(time)
 		except KeyError:
 			print("No match found for truck id #" + str(id))
 	
+	#Parses the command entered by the user
 	def parse_query(self, query):
 		query = query.lower()
 		query = query.rstrip()
@@ -102,6 +110,7 @@ class UserInterface:
 		print("")
 		self.prompt_query()
 	
+	#Initiates the user interface
 	def start(self):
 		print("------------------------------------------------------------------------------")
 		print("Welcome to the user interface!")
