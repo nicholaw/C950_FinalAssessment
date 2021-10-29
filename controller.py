@@ -6,7 +6,7 @@ from timeofday import Time
 from locations import allLocations
 from packages import allPackages, finalGroups, deadlineBuckets
 from truck import Truck
-from constants import MAX_PACKAGES, truncate_to_tenth
+from constants import MAX_PACKAGES, truncate_to_tenth, reverse_array
 from ui import UserInterface
 
 class Controller:
@@ -39,13 +39,23 @@ class Controller:
 	#Loads a package onto a delivery truck
 	def load_truck(self, truck):
 		eligiblePackages = self.eligible_packages(truck)
+		priorityPackages = self.check_for_prioity_packages(eligiblePackages)
 		while(len(truck.cargo) < MAX_PACKAGES and len(eligiblePackages) > 0):
 			if(len(truck.cargo) > 0):
-				nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, eligiblePackages)
+				if(len(priorityPackages) > 0):
+					nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, priorityPackages)
+					priorityPackages.remove(nextPackage)
+				else:
+					nextPackage = Controller.nearest_neighbor(truck.cargo[len(truck.cargo) -1].dest, eligiblePackages)
 			else:
-				nextPackage = Controller.nearest_neighbor(self.hub, eligiblePackages)
-			truck.load(allPackages.pop(nextPackage.id))
+				if(len(priorityPackages) > 0):
+					nextPackage = Controller.nearest_neighbor(self.hub, priorityPackages)
+					priorityPackages.remove(nextPackage)
+				else:
+					nextPackage = Controller.nearest_neighbor(self.hub, eligiblePackages)
 			eligiblePackages.remove(nextPackage)
+			truck.load(allPackages.pop(nextPackage.id))
+		truck.cargo = reverse_array(truck.cargo)
 	
 	#Returns the set of packages eligible to be loaded onto the provided truck
 	def eligible_packages(self, truck):
@@ -55,6 +65,17 @@ class Controller:
 			if(Controller.is_valid(p, truck.id, self.globalTime)):
 				eligible.add(p)
 		return eligible
+	
+	#Retruns a set of packages from the provided collection with deadlines within two hours of the current time
+	def check_for_prioity_packages(self, collection):
+		priority = set()
+		for item in collection:
+			if(item.deadline != None):
+				time = Time.copy_time(self.globalTime)
+				time.add_minutes(120)
+				if(item.deadline.is_before(time) or item.deadline == time):
+					priority.add(item)
+		return priority
 	
 	def load_group(self, group, package, truck):
 		#sort the group by nearest neighbor starting with provided package

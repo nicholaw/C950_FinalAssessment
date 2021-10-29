@@ -56,16 +56,17 @@ class Truck:
 			if(self.eta == self.controller.globalTime or self.eta.is_before(self.controller.globalTime)):
 				if(self.status == "RETURNING TO HUB"):
 					self.status = "AT HUB"
-					print("Truck #" + str(self.id) + " arrived back at hub " + str(self.controller.globalTime) + "\n")
 					self.location = self.destination
 					self.eta = None
 					self.destination = None
 				else:
 					self.location = self.destination
 					self.currentPackage.timeDelivered = Time.copy_time(self.controller.globalTime)
+					#-------------------------------------------------------------------------------------------------------------------------------------#
 					if(self.currentPackage.deadline != None):
 						if(self.currentPackage.timeDelivered.is_after(self.currentPackage.deadline)):
 							print("Oh no, packge #" + str(self.currentPackage.id) + " was delivered late!")
+					#-------------------------------------------------------------------------------------------------------------------------------------#
 					self.controller.packagesDelivered += 1
 					self.destination = None
 					self.currentPackage = None
