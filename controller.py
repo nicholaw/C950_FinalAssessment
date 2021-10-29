@@ -4,7 +4,7 @@ Class which controls interactions among other classes
 
 from timeofday import Time
 from locations import allLocations
-from packages import allPackages, finalGroups, deadlineBuckets
+from packages import allPackages, finalGroups
 from truck import Truck
 from constants import MAX_PACKAGES, truncate_to_tenth, reverse_array
 from ui import UserInterface
@@ -36,7 +36,7 @@ class Controller:
 				self.fleet.add(Truck(i, self.hub, self))
 				i += 1
 	
-	#Loads a package onto a delivery truck
+	#Chooses the next package to be loaded onto the provided truck and loads the package
 	def load_truck(self, truck):
 		eligiblePackages = self.eligible_packages(truck)
 		priorityPackages = self.check_for_prioity_packages(eligiblePackages)
@@ -53,6 +53,10 @@ class Controller:
 					priorityPackages.remove(nextPackage)
 				else:
 					nextPackage = Controller.nearest_neighbor(self.hub, eligiblePackages)
+			group = self.is_part_of_group(nextPackage)
+			if(group != None):
+				Controller.add_packages(group.group, priorityPackages, nextPackage)
+				finalGroups.remove_group(group)
 			eligiblePackages.remove(nextPackage)
 			truck.load(allPackages.pop(nextPackage.id))
 		truck.cargo = reverse_array(truck.cargo)
@@ -72,40 +76,25 @@ class Controller:
 		for item in collection:
 			if(item.deadline != None):
 				time = Time.copy_time(self.globalTime)
-				time.add_minutes(120)
+				time.add_minutes(150)
 				if(item.deadline.is_before(time) or item.deadline == time):
 					priority.add(item)
 		return priority
 	
-	def load_group(self, group, package, truck):
-		#sort the group by nearest neighbor starting with provided package
-		packages = Controller.sort_group(group, package)
-		#ensure there is sufficient space on truck for entire group
-		while(len(truck.cargo) + len(packages) > MAX_PACKAGES):
-			p = truck.cargo.pop()
-			allPackages[p.id] = p
-		#load the group
-		for p in packages:
-			truck.load(p)
-			allPackages.pop(p.id)
-		finalGroups.remove_group(group)
+	#Returns the group of which the provided package is a part if the provided package is part of a group
+	def is_part_of_group(self, package):
+		for group in finalGroups.group:
+			if(group.contains(package)):
+				return group
+		return None
 	
-	def sort_group(group, package):
-		loadOrder = [package]
-		group.remove(package)
-		while(group.size() > 1):
-			next = None
-			minDist = 999
-			for p in group.group:
-				dist = Controller.find_distance(loadOrder[len(loadOrder) - 1].dest, p.dest)
-				if(dist < minDist):
-					next = p
-					minDist = dist
-			loadOrder.append(group.pop(next))
-		loadOrder.append(group.pop_last())
-		return loadOrder
+	#Adds all packages except the provided package from collection A to collectionB
+	def add_packages(collectionA, collectionB, excludedPackage):
+		for p in collectionA:
+			if(p != excludedPackage):
+				collectionB.add(p)
 	
-	#finds the nearest neighbor to the provided location within the provided collection
+	#Finds the nearest neighbor to the provided location within the provided collection
 	def nearest_neighbor(location, collection):
 		next = None
 		minDist = 999
@@ -116,6 +105,7 @@ class Controller:
 				next = item
 		return next
 	
+	#Returns true if the provided package is eligible to be loaded onto the provided truck at the current time
 	def is_valid(package, truckId, time):
 		if(not(package.truck == 0 or package.truck == truckId)):
 			return False
@@ -123,8 +113,10 @@ class Controller:
 			return False
 		return True
 	
+	#Returns the distacne between two provided locations
 	def find_distance(locationA, locationB):
 		return allLocations[locationA].distances[locationB]
+	
 	
 	def start(self):
 		while(len(allPackages) > 0):
@@ -138,6 +130,7 @@ class Controller:
 			self.globalTime.step()
 		self.finish()
 	
+	#Continues algorithm until all packages loaded onto trucks have been delivered
 	def finish(self):
 		while(self.unfinished_deliveries()):
 			for truck in self.fleet:
@@ -145,6 +138,7 @@ class Controller:
 			self.globalTime.step()
 		self.ui.start()
 	
+	#Returns true if there are trucks making deliveries
 	def unfinished_deliveries(self):
 		unfinished = False
 		for truck in self.fleet:
@@ -154,12 +148,14 @@ class Controller:
 				unfinished = True
 		return unfinished
 	
+	#Returns the package matching the proveded package id
 	def get_package(id):
 		try:
 			return allPackages[id]
 		except KeyError:
 			return None
 	
+	#Prints statistics for the current execution such as the time deliveries were completed and the total milage driven by the trucks
 	def print_stats(self):
 		print("Deliveries: " + str(self.packagesDelivered))
 		print("Time: " + str(self.globalTime))

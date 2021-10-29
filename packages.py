@@ -12,33 +12,10 @@ tree = ET.parse("resources/packages.xml")
 root = tree.getroot()
 
 #Initialize data structures for storing and organizing packages
-allPackages = dict()          #all packages to be delivered today
-hasGroup = set()              #all packages which must be delivered with other specified packages
-allGroups = set()             #all distinct groups of packages
-finalGroups = PackageGroup()  #after groups merged to avoid intersections among groups
-deadlineBuckets = dict()      #packages which must be delivered by a specified deadline
-start = Time.of("08:00")
-end = Time.of("14:00")
-while(start.is_before(end) or start == end):
-    deadlineBuckets[Time.copy_time(start)] = set()
-    start.add_minutes(180)
-    
-#Inserts the provided package into the bucket with the corresponding deadline
-def insert_deadline(package):
-    if(package.deadline == None):
-        return False
-    else:
-        for time in deadlineBuckets:
-            start = Time.copy_time(time)
-            end = Time.copy_time(start)
-            end.add_minutes(180)
-            if(package.deadline.is_after(start) and package.deadline.is_before(end)):
-                deadlineBuckets[time].add(package)
-                return True
-            elif(package.deadline == start):
-                deadlineBuckets[time].add(package)
-                return True
-    return False
+allPackages = dict()          				#all packages to be delivered today
+hasGroup = set()              				#all packages which must be delivered with other specified packages
+allGroups = set()             					#all distinct groups of packages
+finalGroups = PackageGroup()  	#after groups merged to avoid intersections among groups
 
 #Populate set of all locations from element tree
 #TODO: can we maybe not have three nested for loops, please
@@ -87,7 +64,6 @@ for item in root.findall(".//package"):
                     i += 1
                 p.group.add(int(num))
                 hasGroup.add(p)
-    insert_deadline(p)
     allPackages[p.id] = p
 
 #Assemble any package groups
@@ -102,3 +78,11 @@ for p in hasGroup:
 finalGroups  = PackageGroup()
 for g in allGroups:
     finalGroups.insert_group(g)
+
+g = 1
+for group in finalGroups.group:
+	print("Group #" + str(g))
+	g += 1
+	for p in group.group:
+		print("Package #" + str(p.id))
+	print("\n----------------------------------------------------")
