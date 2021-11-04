@@ -1,5 +1,7 @@
 """
 Launches C950 parcel delivery algorithm
+
+@author Nicholas Warner, SID #001447619
 """
 
 from timeofday import Time
